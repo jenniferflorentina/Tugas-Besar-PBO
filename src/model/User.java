@@ -3,14 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package model;
+
+import java.util.Date;
 
 /**
  *
  * @author Jennifer Florentina
  */
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Test");
+public class User extends Person{
+    private Date dateOfBirth;
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
+    
 }
