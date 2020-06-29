@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author 1119034 Eirenika Joanna Grace Lendeng
@@ -14,12 +16,14 @@ public class Hotel {
     private String lokasi;
     private String nama;
     private double minimumDP;
+    private ArrayList<Room> roomList;
 
-    public Hotel(int idHotel, String lokasi, String nama, double minimumDP) {
+    public Hotel(int idHotel, String lokasi, String nama, double minimumDP, ArrayList<Room> roomList) {
         this.idHotel = idHotel;
         this.lokasi = lokasi;
         this.nama = nama;
         this.minimumDP = minimumDP;
+        this.roomList = roomList;
     }
 
     public int getIdHotel() {
@@ -52,6 +56,14 @@ public class Hotel {
 
     public void setMinimumDP(double minimumDP) {
         this.minimumDP = minimumDP;
+    }
+
+    public ArrayList<Room> getRoomList() {
+        return roomList;
+    }
+
+    public void setRoomList(ArrayList<Room> roomList) {
+        this.roomList = roomList;
     }
     
     

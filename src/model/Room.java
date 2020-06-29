@@ -9,14 +9,13 @@ package model;
  *
  * @author 1119034 Eirenika Joanna Grace Lendeng
  */
-public class Room extends Hotel{
+public class Room{
     private String tipe;
     private String noKamar;
     private int harga;
     private int batasGuest;
 
-    public Room(String tipe, String noKamar, int harga, int batasGuest, int idHotel, String lokasi, String nama, double minimumDP) {
-        super(idHotel, lokasi, nama, minimumDP);
+    public Room(String tipe, String noKamar, int harga, int batasGuest) {
         this.tipe = tipe;
         this.noKamar = noKamar;
         this.harga = harga;
