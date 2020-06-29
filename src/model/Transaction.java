@@ -23,7 +23,7 @@ public class Transaction {
     private Date tanggalCheckOut;
     private Date tanggalBooking;
 
-    public Transaksi(int idTransaksi, int idHotel, int idJenisPembayaran, String idUser, String noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut, Date tanggalBooking) {
+    public Transaction(int idTransaksi, int idHotel, int idJenisPembayaran, String idUser, String noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut, Date tanggalBooking) {
         this.idTransaksi = idTransaksi;
         this.idHotel = idHotel;
         this.idJenisPembayaran = idJenisPembayaran;
