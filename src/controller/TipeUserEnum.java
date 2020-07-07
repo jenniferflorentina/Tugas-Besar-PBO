@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package controller;
 
-import view.StartScreen;
 /**
  *
  * @author Jennifer Florentina
  */
-public class Main {
-    public static void main(String[] args) {
-        new StartScreen();
-    }
+public enum TipeUserEnum {
+    ADMIN, GUEST, MEMBER;
 }

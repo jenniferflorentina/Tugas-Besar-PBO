@@ -14,8 +14,18 @@ import java.util.Date;
 public class User extends Person{
     private Date dateOfBirth;
 
+    public User(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+    public User() {
+    }
+    
     public Date getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
     
 }
