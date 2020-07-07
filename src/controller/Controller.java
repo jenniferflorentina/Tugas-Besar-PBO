@@ -14,6 +14,8 @@ import model.*;
 import java.math.BigInteger; 
 import java.security.MessageDigest; 
 import java.security.NoSuchAlgorithmException; 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 /**
  *
  * @author Jennifer Florentina
@@ -64,6 +66,7 @@ public class Controller {
         }
         return (users);
     }
+    
     //Get User Login Data
     public static Person getPerson(String username) {
         Person user = null;
@@ -105,6 +108,7 @@ public class Controller {
         }
         return (user);
     }
+    
      // CHECK USERNAME ADA ATAU GA
     public static boolean cekUsername(String username) {
         ArrayList<Person> users = new ArrayList<>();
@@ -169,4 +173,104 @@ public class Controller {
             throw new RuntimeException(e); 
         } 
     } 
+    
+    //Untuk Insert Admin
+    public static boolean insertNewAdmin(User user) {
+        conn.connect();
+        String query = "INSERT INTO user VALUES(?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            //stmt.setInt(1, user.getId());
+            stmt.setInt(2, 0);
+            stmt.setString(3, user.getUsername());
+            stmt.setString(4, user.getPassword());
+            stmt.setString(5, user.getEmail());
+            stmt.setString(6, user.getNoKTP());
+            stmt.setString(7, user.getNoTelepon());
+            stmt.setString(8, user.getName());
+            stmt.setString(9, user.getAlamat());
+            stmt.executeUpdate();
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+    
+    //Untuk Insert User Baru(Guest)
+    public static boolean insertNewUser(User user) {
+        conn.connect();
+        String query = "INSERT INTO user VALUES(?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            //stmt.setInt(1, user.getId());
+            stmt.setInt(2, 1);
+            stmt.setString(3, user.getUsername());
+            stmt.setString(4, user.getPassword());
+            stmt.setString(5, user.getEmail());
+            stmt.setString(6, user.getNoKTP());
+            stmt.setString(7, user.getNoTelepon());
+            stmt.setString(8, user.getName());
+            stmt.setDate(10, (Date) user.getDateOfBirth());
+            stmt.executeUpdate();
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+    
+    //Untuk Insert Member Baru
+    public static boolean insertNewMember(Member user) {
+        conn.connect();
+        String query = "INSERT INTO user VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            //stmt.setInt(1, user.getId());
+            stmt.setInt(2, 2);
+            stmt.setString(3, user.getUsername());
+            stmt.setString(4, user.getPassword());
+            stmt.setString(5, user.getEmail());
+            stmt.setString(6, user.getNoKTP());
+            stmt.setString(7, user.getNoTelepon());
+            stmt.setString(8, user.getName());
+            stmt.setDate(10, (Date) user.getDateOfBirth());
+            stmt.setInt(11, user.getPoinMember());
+            stmt.setInt(12, user.getMembershipFee());
+            int val = (user.isHasPaidFee()) ? 1 : 0;
+            stmt.setInt(13, val);
+            stmt.executeUpdate();
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+    
+    //Check Booking 
+    //Belum check validasi bookingan
+    public static ArrayList cekBooking(int idUser) {
+        ArrayList<Transaction> bookingList = new ArrayList<>();
+        conn.connect();
+        String query = "SELECT * FROM booking_transaksi WHERE idUser='"+idUser+"'";
+        
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Transaction a = new Transaction();
+                a.setIdHotel(rs.getInt("idHotel"));
+                a.setIdJenisPembayaran(rs.getInt("idJenisPembayaran"));
+                a.setJumlahGuest(rs.getInt("jumlahGuest"));
+                //a.setTanggalBooking((Date)rs.getString("tanggalBooking"));
+                //a.setTanggalCheckIn((Date)rs.getString("check_in"));
+                //a.setTanggalCheckOut((Date)rs.getString("check_out"));
+                a.setUangMuka(rs.getInt("uangMuka"));
+                bookingList.add(a);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookingList;
+    }
 }
