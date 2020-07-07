@@ -15,15 +15,15 @@ public class Transaction {
     private int idTransaksi;
     private int idHotel;
     private int idJenisPembayaran;
-    private String idUser;
-    private String noKamar;
+    private int idUser;
+    private int noKamar;
     private int jumlahGuest;
     private int uangMuka;
     private Date tanggalCheckIn;
     private Date tanggalCheckOut;
     private Date tanggalBooking;
 
-    public Transaction(int idTransaksi, int idHotel, int idJenisPembayaran, String idUser, String noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut, Date tanggalBooking) {
+    public Transaction(int idTransaksi, int idHotel, int idJenisPembayaran, int idUser, int noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut, Date tanggalBooking) {
         this.idTransaksi = idTransaksi;
         this.idHotel = idHotel;
         this.idJenisPembayaran = idJenisPembayaran;
@@ -60,19 +60,19 @@ public class Transaction {
         this.idJenisPembayaran = idJenisPembayaran;
     }
 
-    public String getIdUser() {
+    public int getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(String idUser) {
+    public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
 
-    public String getNoKamar() {
+    public int getNoKamar() {
         return noKamar;
     }
 
-    public void setNoKamar(String noKamar) {
+    public void setNoKamar(int noKamar) {
         this.noKamar = noKamar;
     }
 
