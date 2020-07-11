@@ -9,6 +9,7 @@ import controller.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import model.PersonManager;
 /**
  *
  * @author Jennifer Florentina
@@ -106,8 +107,8 @@ public class LogInScreen implements ItemListener, ActionListener{
         }else if(password.equals("")){
             JOptionPane.showMessageDialog(null,"Insert password!","Alert",JOptionPane.WARNING_MESSAGE);
         }else if(Controller.cekPassword(username,password)){
-            PersonManager.getInstance().setUser(Controller.getPerson(username));
-            if(PersonManager.getInstance().getUser().getTipeUser() == TipeUserEnum.ADMIN){
+            PersonManager.getInstance().setPerson(Controller.getPerson(username));
+            if(PersonManager.getInstance().getPerson().getTipeUser() == TipeUserEnum.ADMIN){
                 loginFrame.dispose();
                 new AdminMenuScreen();
             }else{
