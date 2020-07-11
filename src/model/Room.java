@@ -11,11 +11,11 @@ package model;
  */
 public class Room{
     private String tipe;
-    private String noKamar;
+    private int noKamar;
     private int harga;
     private int batasGuest;
 
-    public Room(String tipe, String noKamar, int harga, int batasGuest) {
+    public Room(String tipe, int noKamar, int harga, int batasGuest) {
         this.tipe = tipe;
         this.noKamar = noKamar;
         this.harga = harga;
@@ -30,11 +30,11 @@ public class Room{
         this.tipe = tipe;
     }
 
-    public String getNoKamar() {
+    public int getNoKamar() {
         return noKamar;
     }
 
-    public void setNoKamar(String noKamar) {
+    public void setNoKamar(int noKamar) {
         this.noKamar = noKamar;
     }
 

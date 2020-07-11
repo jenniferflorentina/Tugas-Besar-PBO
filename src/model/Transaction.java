@@ -24,7 +24,7 @@ public class Transaction {
     private Date tanggalBooking;
     
     public Transaction(){}
-    
+
     public Transaction(int idTransaksi, int idHotel, int idJenisPembayaran, int idUser, int noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut, Date tanggalBooking) {
         this.idTransaksi = idTransaksi;
         this.idHotel = idHotel;

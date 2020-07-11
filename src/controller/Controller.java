@@ -23,50 +23,6 @@ import java.sql.PreparedStatement;
 public class Controller {
     static DatabaseHandler conn = new DatabaseHandler();
 
-    // SELECT USER BY USERNAME
-    public static ArrayList<Person> getAllUsers() {
-        ArrayList<Person> users = new ArrayList<>();
-        conn.connect();
-        String query = "SELECT * FROM user";
-        try {
-            Statement stmt = conn.con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                int tipeUser = rs.getInt("tipeUser");
-                Person user;
-                switch(tipeUser){
-                    case 0:
-                        user = new Person();
-                        user.setTipeUser(ADMIN);
-                        break;
-                    case 1:
-                        user = new User(rs.getDate("dateOfBirth"));
-                        user.setTipeUser(GUEST);
-                        break;    
-                    case 2:
-                        user = new Member(rs.getInt("poinMember"),rs.getInt("membershipFee"),rs.getBoolean("bayarMembership"),rs.getDate("dateOfBirth"));
-                        user.setTipeUser(MEMBER);
-                        break;
-                    default:
-                        user = new Person();
-                        break;
-                }
-                user.setId(rs.getInt("idUser"));
-                user.setName(rs.getString("nama"));
-                user.setAlamat(rs.getString("alamat"));
-                user.setNoTelepon(rs.getString("noTelepon"));
-                user.setNoKTP(rs.getString("noKTP"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setEmail(rs.getString("email"));
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return (users);
-    }
-    
     //Get User Login Data
     public static Person getPerson(String username) {
         Person user = null;
@@ -173,6 +129,28 @@ public class Controller {
             throw new RuntimeException(e); 
         } 
     } 
+
+    public static boolean insertUser(User user) {
+        conn.connect();
+        String query = "INSERT INTO user (tipeUser,username,password, email, noKTP, noTelepon,nama,alamat, dateOfBirth) VALUES(?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 1);
+            stmt.setString(2, user.getUsername());
+            stmt.setString(3, getMd5(user.getPassword()));
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, user.getNoKTP());
+            stmt.setString(6, user.getNoTelepon());
+            stmt.setString(7, user.getName());
+            stmt.setString(8, user.getAlamat());
+            stmt.setDate(9, new java.sql.Date(user.getDateOfBirth().getTime()));
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     
     //Untuk Insert Admin
     public static boolean insertNewAdmin(User user) {

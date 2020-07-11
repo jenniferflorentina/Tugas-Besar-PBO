@@ -22,8 +22,9 @@ public class Person {
     private String noTelepon;
     private String alamat;
     
+
     public Person(){}
-    
+
     public Person(int id, TipeUserEnum tipeUser, String username, String password, String name, String email, String noKTP, String noTelepon, String alamat) {
         this.id = id;
         this.tipeUser = tipeUser;
@@ -36,9 +37,22 @@ public class Person {
         this.alamat = alamat;
     }
 
+    public Person(TipeUserEnum tipeUser, String username, String password, String name, String email, String noKTP, String noTelepon, String alamat) {
+        this.tipeUser = tipeUser;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.noKTP = noKTP;
+        this.noTelepon = noTelepon;
+        this.alamat = alamat;
+    }
+    
+
     public int getId() {
         return id;
     }
+
 
     public void setId(int id) {
         this.id = id;

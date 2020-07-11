@@ -13,14 +13,62 @@ import javax.swing.*;
  *
  * @author Jennifer Florentina
  */
-public class AdminMenuScreen {
+public class AdminMenuScreen implements ActionListener{
     
     JFrame adminMenuFrame = new JFrame("Admin Menu");
-    
+    JButton checkinButton, checkoutButton,roomchangeButton,stayoverButton, historyButton, managementButton;
+    JLabel greetingImage, greetingText;
  
     public AdminMenuScreen(){
        adminMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        adminMenuFrame.setIconImage(ConstantStyle.icon);  
+       
+       checkinButton = new JButton("Check In");
+       checkinButton.setBounds(300,400,200,100);
+       checkinButton.addActionListener(this);
+       checkinButton.setFont(ConstantStyle.normal);
+       
+       checkoutButton = new JButton("Check Out");
+       checkoutButton.setBounds(600,400,200,100);
+       checkoutButton.addActionListener(this);
+       checkoutButton.setFont(ConstantStyle.normal);
+       
+       roomchangeButton = new JButton("Stay Over");
+       roomchangeButton.setBounds(300,520,200,100);
+       roomchangeButton.addActionListener(this);
+       roomchangeButton.setFont(ConstantStyle.normal);
+       
+       stayoverButton = new JButton("Room Change");
+       stayoverButton.setBounds(600,520,200,100);
+       stayoverButton.addActionListener(this);
+       stayoverButton.setFont(ConstantStyle.normal);
+       
+       historyButton = new JButton("History");
+       historyButton.setBounds(900,400,200,100);
+       historyButton.addActionListener(this);
+       historyButton.setFont(ConstantStyle.normal);
+       
+       managementButton = new JButton("Management Data");
+       managementButton.setBounds(900,520,200,100);
+       managementButton.addActionListener(this);
+       managementButton.setFont(ConstantStyle.small);
+       
+       Image logo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/logo.png"));
+       greetingImage = new JLabel(new ImageIcon(logo));
+       greetingImage.setBounds(380,100,200,200);
+       greetingText = new JLabel("Admin Menu");
+       greetingText.setBounds(650,100,500,200);
+       greetingText.setFont(new Font("Verdana", Font.PLAIN, 32));
+       
+       adminMenuFrame.add(greetingImage);
+       adminMenuFrame.add(greetingText);
+       adminMenuFrame.getContentPane().add(checkinButton); // Adds Button to content pane of frame
+       adminMenuFrame.getContentPane().add(checkoutButton);
+       adminMenuFrame.getContentPane().add(roomchangeButton);
+       adminMenuFrame.getContentPane().add(stayoverButton);
+       adminMenuFrame.getContentPane().add(historyButton);
+       adminMenuFrame.getContentPane().add(managementButton);
+       
        
        
        adminMenuFrame.getContentPane().setBackground(Color.WHITE);
@@ -28,6 +76,30 @@ public class AdminMenuScreen {
        adminMenuFrame.setLocationRelativeTo(null);
        adminMenuFrame.setLayout(null);  
        adminMenuFrame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String perintah = e.getActionCommand();
+        switch(perintah){
+            case "Check In":
+                adminMenuFrame.dispose();
+                new CheckInScreen();
+                break;
+            case "Check Out":
+                adminMenuFrame.dispose();
+                new CheckOutScreen();
+                break;
+            case "Stay Over":
+                break;
+            case "Room Change":
+                break;
+            case "History":
+                break;
+            case "Management Data":
+                break;
+        
+        }
     }
     
 }
