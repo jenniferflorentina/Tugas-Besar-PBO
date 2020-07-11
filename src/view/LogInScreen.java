@@ -108,6 +108,7 @@ public class LogInScreen implements ItemListener, ActionListener{
         }else if(Controller.cekPassword(username,password)){
             PersonManager.getInstance().setUser(Controller.getPerson(username));
             if(PersonManager.getInstance().getUser().getTipeUser() == TipeUserEnum.ADMIN){
+                loginFrame.dispose();
                 new AdminMenuScreen();
             }else{
             

@@ -102,11 +102,89 @@ public class InsertDatabase {
             e.printStackTrace();
         }
     }
+     // INSERT
+    public static void insertRoom() {
+        conn.connect();
+        String query = "INSERT INTO room (idHotel,tipe,batasGuest,harga) VALUES(?,?,?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 1);
+            stmt.setString(2, "Tower Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 1899000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 1);
+            stmt.setString(2, "Tower Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 1899000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 1);
+            stmt.setString(2, "Suite Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 2999000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 1);
+            stmt.setString(2, "Suite Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 2999000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 2);
+            stmt.setString(2, "Executive Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 1549000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 2);
+            stmt.setString(2, "Executive Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 1549000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 2);
+            stmt.setString(2, "Tower Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 1899000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 2);
+            stmt.setString(2, "Tower Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 1899000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 3);
+            stmt.setString(2, "Deluxe Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 1049000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 3);
+            stmt.setString(2, "Deluxe Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 1049000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 3);
+            stmt.setString(2, "Executive Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 1549000);
+            stmt.executeUpdate();
+            stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, 3);
+            stmt.setString(2, "Executive Room");
+            stmt.setInt(3, 2);
+            stmt.setInt(4, 1549000);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
-       insertHotel();
-       insertBarang();
-       insertJenisPembayaran();
-       
+       insertRoom();
       
     }
     

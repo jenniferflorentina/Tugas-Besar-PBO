@@ -20,6 +20,9 @@ public class Pembayaran {
         this.diskon = diskon;
     }
 
+    public Pembayaran() {
+    }
+
     public int getIdJenisPembayaran() {
         return idJenisPembayaran;
     }

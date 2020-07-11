@@ -5,10 +5,18 @@
  */
 package view;
 
+import controller.*;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;   
+import javax.swing.event.*;
+import model.User;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -20,13 +28,16 @@ import org.jdatepicker.impl.UtilDateModel;
  */
 public class RegisterScreen implements ActionListener{
     JFrame registrasiFrame = new JFrame("Registrasi");
-    JLabel usernameLabel, passwordLabel, namaLabel, emailLabel, teleponLabel, ktpLabel,alamatLabel, birthdayLabel;
+    JLabel usernameLabel, passwordLabel, namaLabel, emailLabel, teleponLabel, ktpLabel,alamatLabel, birthdayLabel, message;
     JTextField uname, email,telepon,ktp,nama;
     JTextArea alamat;
     JPasswordField pass;
     JPanel leftPanel, rightPanel;
     JButton submitButton;
- 
+    JDatePickerImpl datePicker;
+    UtilDateModel model;
+    Properties p;
+    JDatePanelImpl datePanel;
     public RegisterScreen(){
        registrasiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        registrasiFrame.setIconImage(ConstantStyle.icon);  
@@ -84,16 +95,16 @@ public class RegisterScreen implements ActionListener{
        birthdayLabel.setBounds(40, 370, 150, 40);
        birthdayLabel.setFont(ConstantStyle.small);
        
-        UtilDateModel model = new UtilDateModel();
+       model = new UtilDateModel();
         //model.setDate(20,04,2014);
         // Need this...
-        Properties p = new Properties();
-        p.put("text.today", "Today");
-        p.put("text.month", "Month");
-        p.put("text.year", "Year");
-        JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-        // Don't know about the formatter, but there it is...
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+       p = new Properties();
+       p.put("text.today", "Today");
+       p.put("text.month", "Month");
+       p.put("text.year", "Year");
+       datePanel = new JDatePanelImpl(model, p);
+       // Don't know about the formatter, but there it is...
+       datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
        datePicker.setBounds(190, 370, 350, 40);
        datePicker.setFont(ConstantStyle.small);
        datePicker.setBackground(new Color(245,252,193));
@@ -130,10 +141,43 @@ public class RegisterScreen implements ActionListener{
        passwordLabel.setBounds(40,190,130,40);
        passwordLabel.setFont(ConstantStyle.small);
        
+       message = new JLabel();
+       message.setBounds(40,250,400,40);
+       message.setFont(ConstantStyle.small);
+       message.setForeground(Color.red);
+       
        uname = new JTextField(100);
        uname.setBounds(180,130,300,40);
        uname.setFont(ConstantStyle.small);
        uname.setBorder(null);
+       uname.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(Controller.cekUsername(uname.getText())){
+                    submitButton.setEnabled(false);
+                    message.setText("username already taken");
+                }else{
+                    submitButton.setEnabled(true);
+                    message.setText("");
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(Controller.cekUsername(uname.getText())){
+                    submitButton.setEnabled(false);
+                    message.setText("username already taken");
+                }else{
+                    submitButton.setEnabled(true);
+                    message.setText("");
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                
+            }
+        });
        
        pass = new JPasswordField(100);   
        pass.setBounds(180,190,300,40);
@@ -150,6 +194,7 @@ public class RegisterScreen implements ActionListener{
        rightPanel.add(uname);
        rightPanel.add(passwordLabel);
        rightPanel.add(pass);
+       rightPanel.add(message);
        rightPanel.add(submitButton);
        
        registrasiFrame.add(leftPanel);
@@ -163,6 +208,43 @@ public class RegisterScreen implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String nama = this.nama.getText();
+        String email = this.email.getText();
+        String noTelepon = this.telepon.getText();
+        String noKTP = this.ktp.getText();
+        Date birthday = null;
+        try {
+            birthday = new SimpleDateFormat("yyyy-MM-dd").parse(this.datePicker.getJFormattedTextField().getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(RegisterScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String alamat = this.alamat.getText();
+        String username = uname.getText();
+        String password = new String(pass.getPassword());
+        int a=JOptionPane.showConfirmDialog(null,"Are you sure?");  
+        if(a==JOptionPane.YES_OPTION){  
+            if(nama.length()==0 || email.length()==0 || noTelepon.length()==0 || noKTP.length()==0 
+                    || alamat.length()==0|| username.length()==0 || password.length()==0 || birthday == null){
+                JOptionPane.showMessageDialog(null,"Input all the data!","Alert",JOptionPane.WARNING_MESSAGE);
+            }else{
+                User newUser = new User();
+                newUser.setUsername(username);
+                newUser.setPassword(password);
+                newUser.setAlamat(alamat);
+                newUser.setName(nama);
+                newUser.setEmail(email);
+                newUser.setNoKTP(noKTP);
+                newUser.setNoTelepon(noTelepon);
+                newUser.setDateOfBirth(birthday);
+                if(Controller.insertUser(newUser)){
+                    JOptionPane.showMessageDialog(null,"Registration Complete!\nPlease Login!");
+                    registrasiFrame.dispose();
+                    new LogInScreen();
+                }else{
+                    JOptionPane.showMessageDialog(null,"Data can't be inserted!","Alert",JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }  
         
     }
 }
