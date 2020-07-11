@@ -22,6 +22,8 @@ public class Transaction {
     private Date tanggalCheckIn;
     private Date tanggalCheckOut;
     private Date tanggalBooking;
+    
+    public Transaction(){}
 
     public Transaction(int idTransaksi, int idHotel, int idJenisPembayaran, int idUser, int noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut, Date tanggalBooking) {
         this.idTransaksi = idTransaksi;
@@ -115,6 +117,30 @@ public class Transaction {
     public void setTanggalBooking(Date tanggalBooking) {
         this.tanggalBooking = tanggalBooking;
     }
-
     
+    //Salah tempat seharusnya di Controller
+    public void bookingKamar(int idJenisPembayaran, int noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut){
+        //idHotel = HotelManager.getInstance().getHotel().getIdHotel();
+        this.idJenisPembayaran = idJenisPembayaran;
+        idUser = PersonManager.getInstance().getPerson().getId();
+        this.noKamar = noKamar;
+        this.jumlahGuest = jumlahGuest;
+        this.uangMuka = uangMuka;
+        this.tanggalCheckIn = tanggalCheckIn;
+        this.tanggalCheckOut = tanggalCheckOut;
+        this.tanggalBooking = new Date();
+        TransactionManager.getInstance().setTransaction(this);
+    }
+    
+    //Salah tempat seharusnya di Controller
+    public void RescheduleBooking(Date tanggalCheckIn, Date tanggalCheckOut){
+        TransactionManager.getInstance().getTransaction().setTanggalCheckIn(tanggalCheckIn);
+        TransactionManager.getInstance().getTransaction().setTanggalCheckOut(tanggalCheckOut);
+    }
+    
+    //Salah tempat seharusnya di Controller
+    public void CancelBooking(){
+        TransactionManager.getInstance().getTransaction().setTanggalCheckIn(null);
+        TransactionManager.getInstance().getTransaction().setTanggalCheckOut(null);
+    }
 }

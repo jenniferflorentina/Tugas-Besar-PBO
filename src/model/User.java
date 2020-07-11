@@ -15,6 +15,7 @@ import java.util.Date;
 public class User extends Person{
     private Date dateOfBirth;
 
+
     public User(Date dateOfBirth, TipeUserEnum tipeUser, String username, String password, String name, String email, String noKTP, String noTelepon, String alamat) {
         super(tipeUser, username, password, name, email, noKTP, noTelepon, alamat);
         this.dateOfBirth = dateOfBirth;
@@ -24,20 +25,22 @@ public class User extends Person{
         super(id, tipeUser, username, password, name, email, noKTP, noTelepon, alamat);
         this.dateOfBirth = dateOfBirth;
     }
-    public User() {
-       
-    }
 
-    public User(Date dateOfBirth) {
+    public User(){}
+    
+    public User(Date dateOfBirth){
         this.dateOfBirth = dateOfBirth;
     }
-    
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+    
+    public void upgradeToMember(){
+        this.setTipeUser(TipeUserEnum.MEMBER);
     }
     
 }

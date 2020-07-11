@@ -22,9 +22,9 @@ public class Person {
     private String noTelepon;
     private String alamat;
     
-    public Person() {
-      
-    }
+
+    public Person(){}
+
     public Person(int id, TipeUserEnum tipeUser, String username, String password, String name, String email, String noKTP, String noTelepon, String alamat) {
         this.id = id;
         this.tipeUser = tipeUser;
@@ -36,6 +36,7 @@ public class Person {
         this.noTelepon = noTelepon;
         this.alamat = alamat;
     }
+
     public Person(TipeUserEnum tipeUser, String username, String password, String name, String email, String noKTP, String noTelepon, String alamat) {
         this.tipeUser = tipeUser;
         this.username = username;
@@ -47,85 +48,82 @@ public class Person {
         this.alamat = alamat;
     }
     
-    
+
     public int getId() {
         return id;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public TipeUserEnum getTipeUser() {
         return tipeUser;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getNoKTP() {
-        return noKTP;
-    }
-
-    public String getNoTelepon() {
-        return noTelepon;
-    }
-
-    public String getAlamat() {
-        return alamat;
-    }
-    
-    
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setTipeUser(TipeUserEnum tipeUser) {
         this.tipeUser = tipeUser;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getNoKTP() {
+        return noKTP;
     }
 
     public void setNoKTP(String noKTP) {
         this.noKTP = noKTP;
     }
 
+    public String getNoTelepon() {
+        return noTelepon;
+    }
+
     public void setNoTelepon(String noTelepon) {
         this.noTelepon = noTelepon;
+    }
+
+    public String getAlamat() {
+        return alamat;
     }
 
     public void setAlamat(String alamat) {
         this.alamat = alamat;
     }
-
+    
     @Override
     public String toString() {
         return username +" \n"+ password; //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-     
 }   

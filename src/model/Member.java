@@ -30,37 +30,39 @@ public class Member extends User{
         this.membershipFee = membershipFee;
         this.hasPaidFee = hasPaidFee;
     }
-    
-    public Member() {
-        
-    }
 
-    public Member(int poinMember, int membershipFee, boolean hasPaidFee, Date dateOfBirth) {
-        super(dateOfBirth);
+    
+    public Member(){}
+    
+    public Member(int poinMember, int membershipFee, boolean hasPaidFee, Date dateOfBirth){
         this.poinMember = poinMember;
         this.membershipFee = membershipFee;
         this.hasPaidFee = hasPaidFee;
+        this.setDateOfBirth(dateOfBirth);
     }
 
     public int getPoinMember() {
         return poinMember;
     }
 
-    public boolean isHasPaidFee() {
-        return hasPaidFee;
-    }
-
     public void setPoinMember(int poinMember) {
         this.poinMember = poinMember;
+    }
+
+    public int getMembershipFee() {
+        return membershipFee;
     }
 
     public void setMembershipFee(int membershipFee) {
         this.membershipFee = membershipFee;
     }
 
+    public boolean isHasPaidFee() {
+        return hasPaidFee;
+    }
+
     public void setHasPaidFee(boolean hasPaidFee) {
         this.hasPaidFee = hasPaidFee;
     }
-    
     
 }
