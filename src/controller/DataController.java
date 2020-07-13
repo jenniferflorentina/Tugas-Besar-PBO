@@ -11,9 +11,9 @@ package controller;
  */
 
 import static controller.Controller.conn;
-import static controller.TipeUserEnum.ADMIN;
-import static controller.TipeUserEnum.GUEST;
-import static controller.TipeUserEnum.MEMBER;
+import static model.TipeUserEnum.ADMIN;
+import static model.TipeUserEnum.GUEST;
+import static model.TipeUserEnum.MEMBER;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

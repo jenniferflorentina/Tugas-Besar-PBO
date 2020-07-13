@@ -5,7 +5,6 @@
  */
 package model;
 
-import controller.TipeUserEnum;
 import java.util.Date;
 
 /**

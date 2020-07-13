@@ -5,13 +5,12 @@
  */
 package model;
 
-import controller.TipeUserEnum;
-
 /**
  *
  * @author Jennifer Florentina
  */
 public class Person {
+
     private int id;
     private TipeUserEnum tipeUser;
     private String username;
@@ -21,9 +20,9 @@ public class Person {
     private String noKTP;
     private String noTelepon;
     private String alamat;
-    
 
-    public Person(){}
+    public Person() {
+    }
 
     public Person(int id, TipeUserEnum tipeUser, String username, String password, String name, String email, String noKTP, String noTelepon, String alamat) {
         this.id = id;
@@ -47,12 +46,10 @@ public class Person {
         this.noTelepon = noTelepon;
         this.alamat = alamat;
     }
-    
 
     public int getId() {
         return id;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -121,9 +118,9 @@ public class Person {
     public void setAlamat(String alamat) {
         this.alamat = alamat;
     }
-    
+
     @Override
     public String toString() {
-        return username +" \n"+ password; //To change body of generated methods, choose Tools | Templates.
+        return username + " \n" + password; //To change body of generated methods, choose Tools | Templates.
     }
-}   
+}

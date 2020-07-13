@@ -5,14 +5,14 @@
  */
 package model;
 
-import controller.TipeUserEnum;
 import java.util.Date;
 
 /**
  *
  * @author Jennifer Florentina
  */
-public class Member extends User{
+public class Member extends User {
+
     private int poinMember;
     private int membershipFee;
     private boolean hasPaidFee;
@@ -31,10 +31,10 @@ public class Member extends User{
         this.hasPaidFee = hasPaidFee;
     }
 
-    
-    public Member(){}
-    
-    public Member(int poinMember, int membershipFee, boolean hasPaidFee, Date dateOfBirth){
+    public Member() {
+    }
+
+    public Member(int poinMember, int membershipFee, boolean hasPaidFee, Date dateOfBirth) {
         this.poinMember = poinMember;
         this.membershipFee = membershipFee;
         this.hasPaidFee = hasPaidFee;
@@ -64,5 +64,5 @@ public class Member extends User{
     public void setHasPaidFee(boolean hasPaidFee) {
         this.hasPaidFee = hasPaidFee;
     }
-    
+
 }

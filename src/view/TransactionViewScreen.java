@@ -13,7 +13,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import model.TransactionManager;
-import view.ConstantStyle;
+import view.Helper.ConstantStyle;
 
 public class TransactionViewScreen {
     JFrame transactionViewFrame = new JFrame("Transaction");

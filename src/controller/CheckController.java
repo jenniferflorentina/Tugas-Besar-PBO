@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 import model.Transaction;
-import static view.ConstantStyle.formatter;
+import static view.Helper.ConstantStyle.formatter;
 
 /**
  *

@@ -17,7 +17,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 import model.TransactionManager;
-import view.ConstantStyle;
+import view.Helper.ConstantStyle;
 
 public class HistoryScreen implements ActionListener{
     JFrame historyMenuFrame = new JFrame("History Menu");

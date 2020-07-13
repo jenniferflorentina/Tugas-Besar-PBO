@@ -6,8 +6,8 @@
 package model;
 
 import static controller.DataController.*;
-import static view.ConstantStyle.formatter;
-import static view.ConstantStyle.kurensiIndonesia;
+import static view.Helper.ConstantStyle.formatter;
+import static view.Helper.ConstantStyle.kurensiIndonesia;
 
 /**
  *
