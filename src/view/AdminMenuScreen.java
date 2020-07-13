@@ -5,6 +5,7 @@
  */
 package view;
 
+import view.Helper.ConstantStyle;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -53,7 +54,7 @@ public class AdminMenuScreen implements ActionListener{
        managementButton.addActionListener(this);
        managementButton.setFont(ConstantStyle.small);
        
-       Image logo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/logo.png"));
+       Image logo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../asset/img/logo.png"));
        greetingImage = new JLabel(new ImageIcon(logo));
        greetingImage.setBounds(380,100,200,200);
        greetingText = new JLabel("Admin Menu");
@@ -91,10 +92,16 @@ public class AdminMenuScreen implements ActionListener{
                 new CheckOutScreen();
                 break;
             case "Stay Over":
+                 adminMenuFrame.dispose();
+                new StayOverScreen();
                 break;
             case "Room Change":
+                 adminMenuFrame.dispose();
+                new RoomChangeScreen();
                 break;
             case "History":
+                 adminMenuFrame.dispose();
+                new HistoryScreen();
                 break;
             case "Management Data":
                 break;

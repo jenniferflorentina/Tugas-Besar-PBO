@@ -11,7 +11,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import model.PersonManager;
-
+import view.Helper.ConstantStyle;
 /**
  *
  * @author 1119034 Eirenika Joanna Grace Lendeng

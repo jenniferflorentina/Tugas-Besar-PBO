@@ -5,8 +5,11 @@
  */
 package model;
 
+import static controller.DataController.*;
+import java.util.ArrayList;
 import model.Enums.BookingEnum;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -23,6 +26,7 @@ public class Transaction {
     private Date tanggalCheckIn;
     private Date tanggalCheckOut;
     private Date tanggalBooking;
+    private ArrayList<Barang> listBarangRusak = new ArrayList<>();
     private BookingEnum status;
     
     public Transaction(){}
@@ -134,6 +138,24 @@ public class Transaction {
         this.tanggalBooking = tanggalBooking;
     }
 
+    public ArrayList<Barang> getListBarangRusak() {
+        return listBarangRusak;
+    }
+    
+    //Salah tempat seharusnya di Controller
+    public void bookingKamar(int idJenisPembayaran, int noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut){
+        //idHotel = HotelManager.getInstance().getHotel().getIdHotel();
+        this.idJenisPembayaran = idJenisPembayaran;
+        idUser = PersonManager.getInstance().getPerson().getId();
+        this.noKamar = noKamar;
+        this.jumlahGuest = jumlahGuest;
+        this.uangMuka = uangMuka;
+        this.tanggalCheckIn = tanggalCheckIn;
+        this.tanggalCheckOut = tanggalCheckOut;
+        this.tanggalBooking = new Date();
+        TransactionManager.getInstance().setTransaction(this);
+    }   
+        
     public BookingEnum getStatus() {
         return status;
     }
@@ -141,4 +163,32 @@ public class Transaction {
     public void setStatus(BookingEnum status) {
         this.status = status;
     }
+    
+    public void addBarangRusak(Barang barang){
+        this.listBarangRusak.add(barang);
+    }
+    
+    public int getLamaInap(){
+        long diffInMillies = Math.abs(this.tanggalCheckOut.getTime() - this.tanggalCheckIn.getTime());
+        long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        return (int) diff;
+    }
+    
+    public int HitungTotalBayar(){
+        return getLamaInap()*listHotel.get(this.idHotel-1).getRoomList().get(this.noKamar-1).getHarga();
+    }
+    
+    public int HitungDiskon(){
+        if(idJenisPembayaran == 1 && HitungTotalBayar()<2000000){        
+            return 0;
+        }else{
+            return (int) Math.round(HitungTotalBayar()*listJenisPembayaran.get(idJenisPembayaran-1).getDiskon());
+        }
+    }
+    
+    public int getBill(){
+        return (HitungTotalBayar()-this.uangMuka)- HitungDiskon();
+    }
+    
+    
 }

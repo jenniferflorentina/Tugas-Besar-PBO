@@ -5,6 +5,7 @@
  */
 package view;
 
+import view.Helper.ConstantStyle;
 import model.Enums.TipeUserEnum;
 import controller.*;
 import java.awt.*;
@@ -23,8 +24,8 @@ public class LogInScreen implements ItemListener, ActionListener{
     JTextField uname;
     JPasswordField pass;
     JButton submitButton;
-    Image eye = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/eye.png")); 
-    Image noEye = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/noeye.png"));
+    Image eye = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../asset/img/eye.png")); 
+    Image noEye = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../asset/img/noeye.png"));
     
     public LogInScreen(){
        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

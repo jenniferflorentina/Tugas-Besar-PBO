@@ -13,7 +13,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
-import view.ConstantStyle;
+import view.Helper.ConstantStyle;
 
 public class StayOverScreen {
     JFrame stayOverMenuFrame = new JFrame("Stay Over Menu");

@@ -54,5 +54,7 @@ public class Barang {
         this.namaBarang = namaBarang;
     }
     
-    
+    public int getTotalBayar(){
+        return this.jumlah*this.harga;
+    }
 }
