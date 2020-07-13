@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.CheckController;
 import static controller.DataController.*;
 import java.util.ArrayList;
 import model.Enums.BookingEnum;
@@ -175,7 +176,8 @@ public class Transaction {
     }
     
     public int HitungTotalBayar(){
-        return getLamaInap()*listHotel.get(this.idHotel-1).getRoomList().get(this.noKamar-1).getHarga();
+        Room room = CheckController.getDataRoom(this.idHotel,this.noKamar);
+        return getLamaInap()*room.getHarga();
     }
     
     public int HitungDiskon(){

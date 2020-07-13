@@ -48,7 +48,7 @@ public class UserMenuScreen implements ActionListener{
        upgradeToMemberButton.addActionListener(this);
        upgradeToMemberButton.setFont(ConstantStyle.normal);
        
-       Image logo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../img/logo.png"));
+       Image logo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../asset/img/logo.png"));
        greetingImage = new JLabel(new ImageIcon(logo));
        greetingImage.setBounds(380,100,200,200);
        greetingText = new JLabel("User Menu");

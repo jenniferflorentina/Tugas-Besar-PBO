@@ -10,7 +10,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
+import model.Hotel;
+import model.Room;
 import model.Transaction;
+import model.TransactionManager;
 import static view.Helper.ConstantStyle.formatter;
 
 /**
@@ -20,6 +23,19 @@ import static view.Helper.ConstantStyle.formatter;
 public class CheckController {
     static DatabaseHandler conn = new DatabaseHandler();
     
+    //GET ROOM INDEX IN ARRAY HOTEL
+    public static Room getDataRoom(int idHotel, int noKamar){
+        Hotel hotel = DataController.listHotel.get(idHotel-1);
+        Room room = null;
+        for (int i = 0; i < hotel.getRoomList().size(); i++) {
+            if(hotel.getRoomList().get(i).getNoKamar() == noKamar){
+                room = hotel.getRoomList().get(i);
+                break;
+            }
+        }
+        return room;
+    }
+
     // SELECT ALL TRANSACTION
     public static DefaultTableModel getAllTransaction() {
         DefaultTableModel model = new DefaultTableModel(new String[]{"ID Transaksi", "ID Hotel", "ID User","No. Kamar", "Tanggal Booking","Check In","Check Out","Jumlah Guest","Uang Muka","ID Pembayaran","Status"}, 0){ 

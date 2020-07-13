@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.CheckController;
 import static controller.DataController.*;
 import static view.Helper.ConstantStyle.formatter;
 import static view.Helper.ConstantStyle.kurensiIndonesia;
@@ -35,6 +36,7 @@ public class TransactionManager {
     @Override
     public String toString() {
         Person person = getPersonByID(this.transaction.getIdUser());
+        Room room = CheckController.getDataRoom(transaction.getIdHotel(),transaction.getNoKamar());
         return "<html><pre>ID Transaksi : "+this.transaction.getIdTransaksi()
                 +"<br/>Tanggal Booking : " + formatter.format(this.transaction.getTanggalBooking())
                 +"<br/>Tanggal Check In : " + formatter.format(this.transaction.getTanggalCheckIn())
@@ -43,8 +45,8 @@ public class TransactionManager {
                 +"<br/>Detail Hotel : <br/>      Nama : "+listHotel.get(this.transaction.getIdHotel()-1).getNama()
                 +"<br/>      Alamat : "+listHotel.get(this.transaction.getIdHotel()-1).getLokasi()
                 +"<br/>Detail Kamar : <br/>      No Kamar : "+this.transaction.getNoKamar()
-                +"<br/>      Tipe Kamar : "+listHotel.get(this.transaction.getIdHotel()-1).getRoomList().get(this.transaction.getNoKamar()-1).getTipe()
-                +"<br/>      Harga Kamar : "+listHotel.get(this.transaction.getIdHotel()-1).getRoomList().get(this.transaction.getNoKamar()-1).getHarga()
+                +"<br/>      Tipe Kamar : "+room.getTipe()
+                +"<br/>      Harga Kamar : "+kurensiIndonesia.format(room.getHarga())
                 +"<br/>Detail User : <br/>      ID User : "+this.transaction.getIdUser()
                 +"<br/>      Nama : " + person.getName()
                 +"<br/>      Telepon : " + person.getNoTelepon()

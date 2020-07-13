@@ -67,14 +67,7 @@ public class CheckInScreen implements ActionListener, ItemListener{
                 if(a==JOptionPane.YES_OPTION){  
                     int idTransaksi = Integer.parseInt(Data);
                     TransactionManager.getInstance().setTransaction(CheckController.getOneTransaction(idTransaksi));
-                    Hotel hotel = DataController.listHotel.get(a);
-                    Room room = null;
-                    for (int i = 0; i < hotel.getRoomList().size(); i++) {
-                        if(hotel.getRoomList().get(i).getNoKamar() == TransactionManager.getInstance().getTransaction().getNoKamar()){
-                            room = hotel.getRoomList().get(i);
-                            break;
-                        }
-                    }
+                    Room room = CheckController.getDataRoom(TransactionManager.getInstance().getTransaction().getIdHotel(),TransactionManager.getInstance().getTransaction().getNoKamar());
                     String str = "ID Transaksi : "+TransactionManager.getInstance().getTransaction().getIdTransaksi()+"\nRincian Kamar : "
                             + room.toString();
                     JOptionPane.showMessageDialog(null,str);
