@@ -5,7 +5,7 @@
  */
 package controller;
 
-import static controller.TipeUserEnum.*;
+import static model.Enums.TipeUserEnum.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -155,18 +155,17 @@ public class Controller {
     //Untuk Insert Admin
     public static boolean insertNewAdmin(User user) {
         conn.connect();
-        String query = "INSERT INTO user VALUES(?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO user (tipeUser, username, password, email, noKTP, noTelepon, nama, alamat) VALUES(?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            //stmt.setInt(1, user.getId());
-            stmt.setInt(2, 0);
-            stmt.setString(3, user.getUsername());
-            stmt.setString(4, user.getPassword());
-            stmt.setString(5, user.getEmail());
-            stmt.setString(6, user.getNoKTP());
-            stmt.setString(7, user.getNoTelepon());
-            stmt.setString(8, user.getName());
-            stmt.setString(9, user.getAlamat());
+            stmt.setInt(1, 0);
+            stmt.setString(2, user.getUsername());
+            stmt.setString(3, getMd5(user.getPassword()));
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, user.getNoKTP());
+            stmt.setString(6, user.getNoTelepon());
+            stmt.setString(7, user.getName());
+            stmt.setString(8, user.getAlamat());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -175,48 +174,26 @@ public class Controller {
         }
     }
     
-    //Untuk Insert User Baru(Guest)
-    public static boolean insertNewUser(User user) {
-        conn.connect();
-        String query = "INSERT INTO user VALUES(?,?,?,?,?,?,?,?,?)";
-        try {
-            PreparedStatement stmt = conn.con.prepareStatement(query);
-            //stmt.setInt(1, user.getId());
-            stmt.setInt(2, 1);
-            stmt.setString(3, user.getUsername());
-            stmt.setString(4, user.getPassword());
-            stmt.setString(5, user.getEmail());
-            stmt.setString(6, user.getNoKTP());
-            stmt.setString(7, user.getNoTelepon());
-            stmt.setString(8, user.getName());
-            stmt.setDate(10, (Date) user.getDateOfBirth());
-            stmt.executeUpdate();
-            return (true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return (false);
-        }
-    }
+    //Untuk Insert User Baru(Guest) sudah ada
     
     //Untuk Insert Member Baru
     public static boolean insertNewMember(Member user) {
         conn.connect();
-        String query = "INSERT INTO user VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO user (tipeUser, username, password, email, noKTP, noTelepon, nama, dateOfBirth, poinMember, membershipFee, bayarMembership) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            //stmt.setInt(1, user.getId());
-            stmt.setInt(2, 2);
-            stmt.setString(3, user.getUsername());
-            stmt.setString(4, user.getPassword());
-            stmt.setString(5, user.getEmail());
-            stmt.setString(6, user.getNoKTP());
-            stmt.setString(7, user.getNoTelepon());
-            stmt.setString(8, user.getName());
-            stmt.setDate(10, (Date) user.getDateOfBirth());
-            stmt.setInt(11, user.getPoinMember());
-            stmt.setInt(12, user.getMembershipFee());
+            stmt.setInt(1, 2);
+            stmt.setString(2, user.getUsername());
+            stmt.setString(3, getMd5(user.getPassword()));
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, user.getNoKTP());
+            stmt.setString(6, user.getNoTelepon());
+            stmt.setString(7, user.getName());
+            stmt.setDate(8, new java.sql.Date(user.getDateOfBirth().getTime()));
+            stmt.setInt(9, user.getPoinMember());
+            stmt.setInt(10, user.getMembershipFee());
             int val = (user.isHasPaidFee()) ? 1 : 0;
-            stmt.setInt(13, val);
+            stmt.setInt(11, val);
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -226,12 +203,10 @@ public class Controller {
     }
     
     //Check Booking 
-    //Belum check validasi bookingan
     public static ArrayList cekBooking(int idUser) {
         ArrayList<Transaction> bookingList = new ArrayList<>();
         conn.connect();
-        String query = "SELECT * FROM booking_transaksi WHERE idUser='"+idUser+"'";
-        
+        String query = "SELECT * FROM booking_transaksi WHERE idUser='"+idUser+"'&&status='booked'";
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -240,9 +215,9 @@ public class Controller {
                 a.setIdHotel(rs.getInt("idHotel"));
                 a.setIdJenisPembayaran(rs.getInt("idJenisPembayaran"));
                 a.setJumlahGuest(rs.getInt("jumlahGuest"));
-                //a.setTanggalBooking((Date)rs.getString("tanggalBooking"));
-                //a.setTanggalCheckIn((Date)rs.getString("check_in"));
-                //a.setTanggalCheckOut((Date)rs.getString("check_out"));
+                a.setTanggalBooking(rs.getDate("tanggalBooking"));
+                a.setTanggalCheckIn(rs.getDate("check_in"));
+                a.setTanggalCheckOut(rs.getDate("check_out"));
                 a.setUangMuka(rs.getInt("uangMuka"));
                 bookingList.add(a);
             }
@@ -250,5 +225,130 @@ public class Controller {
             e.printStackTrace();
         }
         return bookingList;
+    }
+    
+    //Untuk insert booking kamar
+    public static boolean bookingKamar(Transaction trans){
+        conn.connect();
+        String query = "INSERT INTO booking_transaksi (idHotel, noKamar, idUser, tanggalBooking, check_in, check_out, jumlahGuest, uangMuka, idJenisPembayaran, status) VALUES(?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, trans.getIdHotel());
+            stmt.setInt(2, trans.getNoKamar());
+            stmt.setInt(3, trans.getIdUser());
+            stmt.setDate(4, new java.sql.Date(trans.getTanggalBooking().getTime()));
+            stmt.setDate(5, new java.sql.Date(trans.getTanggalCheckIn().getTime()));
+            stmt.setDate(6, new java.sql.Date(trans.getTanggalCheckOut().getTime()));
+            stmt.setInt(7, trans.getJumlahGuest());
+            stmt.setInt(8, trans.getUangMuka());
+            stmt.setInt(9, trans.getIdJenisPembayaran());
+            stmt.setString(10,  String.valueOf(model.Enums.BookingEnum.BOOKED));
+            stmt.executeUpdate();
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+    
+    //Untuk reschedul booking
+    public static boolean RescheduleBooking(Transaction trans){
+        conn.connect();
+        String query = "UPDATE booking_transaksi SET  check_in='" + new java.sql.Date(trans.getTanggalCheckIn().getTime()) + "', "
+                + "check_out='" + new java.sql.Date(trans.getTanggalCheckOut().getTime()) + "' "
+                + "WHERE idTransaksi='"+trans.getIdTransaksi()+"' "
+                ;
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.executeUpdate();
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+    
+    //Untuk cancel booking
+    public static boolean CancelBooking(Transaction trans){
+        conn.connect();
+        String query = "UPDATE booking_transaksi SET  status='" + model.Enums.BookingEnum.CANCELLED + "' "
+                + "WHERE idTransaksi='"+trans.getIdTransaksi()+"' "
+                ;
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.executeUpdate();
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+    
+    //Untuk upgrade user menjadi member
+    public static boolean upgradeToMember(User user){
+        conn.connect();
+        String query = "UPDATE user SET poinMember = '50', membershipFee = '200000', bayarMembership = '1' WHERE idUser='"+ user.getId()+"'";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.executeUpdate();
+            Member member = new Member();
+            member.setAlamat(user.getAlamat());
+            member.setTipeUser(model.Enums.TipeUserEnum.MEMBER);
+            member.setDateOfBirth(user.getDateOfBirth());
+            member.setEmail(user.getEmail());
+            member.setNoKTP(user.getNoKTP());
+            member.setNoTelepon(user.getNoTelepon());
+            member.setUsername(user.getUsername());
+            member.setPassword(user.getPassword());
+            member.setName(user.getName());
+            member.setPoinMember(50);
+            member.setMembershipFee(200000);
+            member.setHasPaidFee(true);
+            PersonManager.getInstance().setPerson(member);
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return(false);
+        }
+    }
+    
+    //Untuk berhenti jadi member
+    public static boolean stopBeingMember(Member member){
+        conn.connect();
+        String query = "UPDATE user SET poinMember = '', membershipFee = '', bayarMembership = '' WHERE idUser='"+ member.getId()+"'";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.executeUpdate();
+            User user = new User();
+            user.setAlamat(user.getAlamat());
+            user.setTipeUser(model.Enums.TipeUserEnum.MEMBER);
+            user.setDateOfBirth(user.getDateOfBirth());
+            user.setEmail(user.getEmail());
+            user.setNoKTP(user.getNoKTP());
+            user.setNoTelepon(user.getNoTelepon());
+            user.setUsername(user.getUsername());
+            user.setPassword(user.getPassword());
+            user.setName(user.getName());
+            PersonManager.getInstance().setPerson(user);
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return(false);
+        }
+    }
+    
+    //Untuk membayar membership
+    public static boolean membershipPayment(Member member){
+        conn.connect();
+        String query = "UPDATE user SET bayarMembership = '1' WHERE idUser='"+ member.getId()+"'";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.executeUpdate();
+            member.setHasPaidFee(true);
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return(false);
+        }
     }
 }

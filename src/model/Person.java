@@ -5,7 +5,7 @@
  */
 package model;
 
-import controller.TipeUserEnum;
+import model.Enums.TipeUserEnum;
 
 /**
  *
