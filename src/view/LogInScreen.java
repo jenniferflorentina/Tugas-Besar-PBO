@@ -113,8 +113,12 @@ public class LogInScreen implements ItemListener, ActionListener{
             if(PersonManager.getInstance().getPerson().getTipeUser() == TipeUserEnum.ADMIN){
                 loginFrame.dispose();
                 new AdminMenuScreen();
+            }else if(PersonManager.getInstance().getPerson().getTipeUser() == TipeUserEnum.MEMBER){
+                loginFrame.dispose();
+                new MemberMenuScreen();
             }else{
-            
+                loginFrame.dispose();
+                new UserMenuScreen();
             }
         }else{
             JOptionPane.showMessageDialog(null,"Insert username and password correctly!","Alert",JOptionPane.WARNING_MESSAGE);
