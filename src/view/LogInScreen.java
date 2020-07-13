@@ -5,6 +5,7 @@
  */
 package view;
 
+import model.Enums.TipeUserEnum;
 import controller.*;
 import java.awt.*;
 import java.awt.event.*;
