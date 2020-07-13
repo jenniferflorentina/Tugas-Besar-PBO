@@ -21,6 +21,8 @@ public class Room{
         this.harga = harga;
         this.batasGuest = batasGuest;
     }
+    
+    public Room(){}
 
     public String getTipe() {
         return tipe;

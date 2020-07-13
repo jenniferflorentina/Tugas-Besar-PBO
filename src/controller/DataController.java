@@ -11,14 +11,12 @@ package controller;
  */
 
 import static controller.Controller.conn;
-import static model.TipeUserEnum.ADMIN;
-import static model.TipeUserEnum.GUEST;
-import static model.TipeUserEnum.MEMBER;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import model.*;
+import static model.Enums.TipeUserEnum.*;
 
 public class DataController {
     static DatabaseHandler conn = new DatabaseHandler();

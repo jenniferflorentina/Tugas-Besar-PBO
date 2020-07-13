@@ -26,6 +26,8 @@ public class Hotel {
         this.roomList = roomList;
     }
 
+    public Hotel(){}
+    
     public int getIdHotel() {
         return idHotel;
     }

@@ -5,6 +5,7 @@
  */
 package model;
 
+import model.Enums.TipeUserEnum;
 /**
  *
  * @author Jennifer Florentina

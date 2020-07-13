@@ -5,7 +5,7 @@
  */
 package controller;
 
-import static model.TipeUserEnum.*;
+import static model.Enums.TipeUserEnum.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

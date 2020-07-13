@@ -6,7 +6,7 @@
 package view;
 
 import view.Helper.ConstantStyle;
-import model.TipeUserEnum;
+import model.Enums.TipeUserEnum;
 import controller.*;
 import java.awt.*;
 import java.awt.event.*;

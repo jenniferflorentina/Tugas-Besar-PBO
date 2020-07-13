@@ -7,6 +7,7 @@ package model;
 
 import static controller.DataController.*;
 import java.util.ArrayList;
+import model.Enums.BookingEnum;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -26,10 +27,11 @@ public class Transaction {
     private Date tanggalCheckOut;
     private Date tanggalBooking;
     private ArrayList<Barang> listBarangRusak = new ArrayList<>();
+    private BookingEnum status;
     
     public Transaction(){}
 
-    public Transaction(int idTransaksi, int idHotel, int idJenisPembayaran, int idUser, int noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut, Date tanggalBooking) {
+    public Transaction(int idTransaksi, int idHotel, int idJenisPembayaran, int idUser, int noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut, Date tanggalBooking, BookingEnum status) {
         this.idTransaksi = idTransaksi;
         this.idHotel = idHotel;
         this.idJenisPembayaran = idJenisPembayaran;
@@ -40,6 +42,20 @@ public class Transaction {
         this.tanggalCheckIn = tanggalCheckIn;
         this.tanggalCheckOut = tanggalCheckOut;
         this.tanggalBooking = tanggalBooking;
+        this.status = status;
+    }
+    
+    public Transaction(int idHotel, int idJenisPembayaran, int idUser, int noKamar, int jumlahGuest, int uangMuka, Date tanggalCheckIn, Date tanggalCheckOut, Date tanggalBooking, BookingEnum status) {
+        this.idHotel = idHotel;
+        this.idJenisPembayaran = idJenisPembayaran;
+        this.idUser = idUser;
+        this.noKamar = noKamar;
+        this.jumlahGuest = jumlahGuest;
+        this.uangMuka = uangMuka;
+        this.tanggalCheckIn = tanggalCheckIn;
+        this.tanggalCheckOut = tanggalCheckOut;
+        this.tanggalBooking = tanggalBooking;
+        this.status = status;
     }
 
     public int getIdTransaksi() {
@@ -138,18 +154,14 @@ public class Transaction {
         this.tanggalCheckOut = tanggalCheckOut;
         this.tanggalBooking = new Date();
         TransactionManager.getInstance().setTransaction(this);
+    }   
+        
+    public BookingEnum getStatus() {
+        return status;
     }
-    
-    //Salah tempat seharusnya di Controller
-    public void RescheduleBooking(Date tanggalCheckIn, Date tanggalCheckOut){
-        TransactionManager.getInstance().getTransaction().setTanggalCheckIn(tanggalCheckIn);
-        TransactionManager.getInstance().getTransaction().setTanggalCheckOut(tanggalCheckOut);
-    }
-    
-    //Salah tempat seharusnya di Controller
-    public void CancelBooking(){
-        TransactionManager.getInstance().getTransaction().setTanggalCheckIn(null);
-        TransactionManager.getInstance().getTransaction().setTanggalCheckOut(null);
+
+    public void setStatus(BookingEnum status) {
+        this.status = status;
     }
     
     public void addBarangRusak(Barang barang){
