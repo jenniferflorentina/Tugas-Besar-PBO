@@ -53,5 +53,10 @@ public class Room{
     public void setBatasGuest(int batasGuest) {
         this.batasGuest = batasGuest;
     }
+
+    @Override
+    public String toString() {
+        return "\nNo Kamar : " + noKamar + "\nTipe : " + tipe +  "\nHarga : " + harga + "\nBatas Guest : " + batasGuest;
+    }
     
 }

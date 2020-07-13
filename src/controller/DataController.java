@@ -10,6 +10,10 @@ package controller;
  * @author Jennifer Florentina
  */
 
+import static controller.Controller.conn;
+import static controller.TipeUserEnum.ADMIN;
+import static controller.TipeUserEnum.GUEST;
+import static controller.TipeUserEnum.MEMBER;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,6 +24,7 @@ public class DataController {
     static DatabaseHandler conn = new DatabaseHandler();
     public static ArrayList<Hotel> listHotel = getListHotel();
     public static ArrayList<Pembayaran>  listJenisPembayaran = getAllPembayaran();
+    public static ArrayList<Barang>  listBarang = getAllBarang();
     
     //SELECT ALL HOTEL
     public static ArrayList<Hotel> getListHotel(){
@@ -74,5 +79,63 @@ public class DataController {
             e.printStackTrace();
         }
         return (pembayaran);
+    }
+     // GET JENIS BARANG
+    public static ArrayList<Barang> getAllBarang() {
+        ArrayList<Barang> barang = new ArrayList<>();
+        conn.connect();
+        String query = "SELECT * FROM barang";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                barang.add(new Barang(rs.getInt("idBarang"),rs.getInt("harga"),rs.getInt("jumlah"),rs.getString("nama")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (barang);
+    }
+    
+     //Get User By ID
+    public static Person getPersonByID(int idUser) {
+        Person user = null;
+        conn.connect();
+        String query = "SELECT * FROM user WHERE idUser="+idUser;
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                int tipeUser = rs.getInt("tipeUser");
+                switch(tipeUser){
+                    case 0:
+                        user = new Person();
+                        user.setTipeUser(ADMIN);
+                        break;
+                    case 1:
+                        user = new User(rs.getDate("dateOfBirth"));
+                        user.setTipeUser(GUEST);
+                        break;    
+                    case 2:
+                        user = new Member(rs.getInt("poinMember"),rs.getInt("membershipFee"),rs.getBoolean("bayarMembership"),rs.getDate("dateOfBirth"));
+                        user.setTipeUser(MEMBER);
+                        break;
+                    default:
+                        user = new Person();
+                        break;
+                }
+                user.setId(rs.getInt("idUser"));
+                user.setName(rs.getString("nama"));
+                user.setAlamat(rs.getString("alamat"));
+                user.setNoTelepon(rs.getString("noTelepon"));
+                user.setNoKTP(rs.getString("noKTP"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (user);
     }
 }

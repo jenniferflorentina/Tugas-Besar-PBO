@@ -5,6 +5,10 @@
  */
 package model;
 
+import static controller.DataController.*;
+import static view.ConstantStyle.formatter;
+import static view.ConstantStyle.kurensiIndonesia;
+
 /**
  *
  * @author 1119034 Eirenika Joanna Grace Lendeng
@@ -27,4 +31,31 @@ public class TransactionManager {
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
     }
+
+    @Override
+    public String toString() {
+        Person person = getPersonByID(this.transaction.getIdUser());
+        return "<html><pre>ID Transaksi : "+this.transaction.getIdTransaksi()
+                +"<br/>Tanggal Booking : " + formatter.format(this.transaction.getTanggalBooking())
+                +"<br/>Tanggal Check In : " + formatter.format(this.transaction.getTanggalCheckIn())
+                +"<br/>Tanggal Check Out : " + formatter.format(this.transaction.getTanggalCheckOut())
+                +"<br/>Lama Inap : " + this.transaction.getLamaInap()+" hari"
+                +"<br/>Detail Hotel : <br/>      Nama : "+listHotel.get(this.transaction.getIdHotel()-1).getNama()
+                +"<br/>      Alamat : "+listHotel.get(this.transaction.getIdHotel()-1).getLokasi()
+                +"<br/>Detail Kamar : <br/>      No Kamar : "+this.transaction.getNoKamar()
+                +"<br/>      Tipe Kamar : "+listHotel.get(this.transaction.getIdHotel()-1).getRoomList().get(this.transaction.getNoKamar()-1).getTipe()
+                +"<br/>      Harga Kamar : "+listHotel.get(this.transaction.getIdHotel()-1).getRoomList().get(this.transaction.getNoKamar()-1).getHarga()
+                +"<br/>Detail User : <br/>      ID User : "+this.transaction.getIdUser()
+                +"<br/>      Nama : " + person.getName()
+                +"<br/>      Telepon : " + person.getNoTelepon()
+                +"<br/>Detail Pembayaran : <br/>      ID Pembayaran : "+this.transaction.getIdJenisPembayaran()
+                +"<br/>      Jenis : " + listJenisPembayaran.get(this.transaction.getIdJenisPembayaran()-1).getJenis()
+                +"<br/>      Persen Diskon : " + listJenisPembayaran.get(this.transaction.getIdJenisPembayaran()-1).getDiskon()*100 +"%"
+                +"<br/>      Harga Total : " + kurensiIndonesia.format(transaction.HitungTotalBayar())
+                +"<br/>      Uang Muka : " + kurensiIndonesia.format(transaction.getUangMuka())
+                +"<br/>      Diskon : " + kurensiIndonesia.format(transaction.HitungDiskon())
+                +"<br/>      Harga akhir yang dibayar setelah diskon : "+kurensiIndonesia.format(transaction.getBill())+"</pre></html>";
+    }
+    
+    
 }

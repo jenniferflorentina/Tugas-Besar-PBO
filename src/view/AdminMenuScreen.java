@@ -91,10 +91,16 @@ public class AdminMenuScreen implements ActionListener{
                 new CheckOutScreen();
                 break;
             case "Stay Over":
+                 adminMenuFrame.dispose();
+                new StayOverScreen();
                 break;
             case "Room Change":
+                 adminMenuFrame.dispose();
+                new RoomChangeScreen();
                 break;
             case "History":
+                 adminMenuFrame.dispose();
+                new HistoryScreen();
                 break;
             case "Management Data":
                 break;

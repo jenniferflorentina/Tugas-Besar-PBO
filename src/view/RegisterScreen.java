@@ -221,7 +221,7 @@ public class RegisterScreen implements ActionListener{
         String alamat = this.alamat.getText();
         String username = uname.getText();
         String password = new String(pass.getPassword());
-        int a=JOptionPane.showConfirmDialog(null,"Are you sure?");  
+        int a=JOptionPane.showOptionDialog(null,"Are you sure?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
         if(a==JOptionPane.YES_OPTION){  
             if(nama.length()==0 || email.length()==0 || noTelepon.length()==0 || noKTP.length()==0 
                     || alamat.length()==0|| username.length()==0 || password.length()==0 || birthday == null){
