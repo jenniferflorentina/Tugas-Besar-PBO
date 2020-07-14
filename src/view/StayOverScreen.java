@@ -13,6 +13,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
+import model.Enums.BookingEnum;
 import view.Helper.ConstantStyle;
 
 public class StayOverScreen {
@@ -28,7 +29,7 @@ public class StayOverScreen {
         judul.setBounds(50,50,200,100);
         judul.setFont(ConstantStyle.normal);
         
-        DefaultTableModel model = controller.CheckController.getTransactionOut();
+        DefaultTableModel model = controller.CheckController.getTransactionByStatus(0,BookingEnum.CHECKEDIN);
         table = new JTable(model);
         table.setBounds(100,150,1200,500); 
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);

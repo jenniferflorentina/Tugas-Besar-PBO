@@ -13,12 +13,14 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import model.*;
+import model.Enums.BookingEnum;
 
 /**
  *
  * @author Jennifer Florentina
  */
-public class CheckInScreen implements ActionListener, ItemListener{
+public class CheckInScreen implements ActionListener, ItemListener {
+
     JFrame checkinMenuFrame = new JFrame("Check In Menu");
     JLabel judul, filterLabel;
     JTable table;
@@ -27,57 +29,61 @@ public class CheckInScreen implements ActionListener, ItemListener{
 
     public CheckInScreen() {
         checkinMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        checkinMenuFrame.setIconImage(ConstantStyle.icon);  
-        
+        checkinMenuFrame.setIconImage(ConstantStyle.icon);
+
         judul = new JLabel("Daftar Transaksi :");
-        judul.setBounds(20,10,200,80);
+        judul.setBounds(20, 10, 200, 80);
         judul.setFont(ConstantStyle.normal);
-        
+
         filterLabel = new JLabel("Filter : ");
-        filterLabel.setBounds(20, 105,80,20);  
+        filterLabel.setBounds(20, 105, 80, 20);
         filterLabel.setFont(ConstantStyle.small);
-        filter=new JComboBox();    
+        filter = new JComboBox();
         filter.setFont(ConstantStyle.small);
-        filter.setBounds(100, 105,200,20); 
+        filter.setBounds(100, 105, 200, 20);
         filter.addItem("All");
         for (int i = 0; i < DataController.listHotel.size(); i++) {
             filter.addItem(DataController.listHotel.get(i).getNama());
         }
         filter.addItemListener(this);
-        
-        DefaultTableModel model = controller.CheckController.getTransaction(0);
+
+        DefaultTableModel model = controller.CheckController.getTransactionByStatus(0, BookingEnum.BOOKED);
         table = new JTable(model);
-        table.setBounds(100,150,1200,500); 
+        table.setBounds(100, 150, 1200, 500);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         JScrollPane sp = new JScrollPane(table);
-        sp.setBounds(100,150,1200,500);
-        
-        table.setRowSelectionAllowed(true);  
-        ListSelectionModel select= table.getSelectionModel();  
-        select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
-        select.addListSelectionListener(new ListSelectionListener() {  
-              @Override
-              public void valueChanged(ListSelectionEvent e) {  
-                String Data = null;  
-                int[] row = table.getSelectedRows();  
-                for (int i = 0; i < row.length; i++) {  
-                    Data = (String) table.getValueAt(row[i], 0);  
+        sp.setBounds(100, 150, 1200, 500);
+
+        table.setRowSelectionAllowed(true);
+        ListSelectionModel select = table.getSelectionModel();
+        select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        select.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                String Data = null;
+                int[] row = table.getSelectedRows();
+                for (int i = 0; i < row.length; i++) {
+                    Data = (String) table.getValueAt(row[i], 0);
                 }
-                int a=JOptionPane.showOptionDialog(null,"Are you sure?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-                if(a==JOptionPane.YES_OPTION){  
+                int a = JOptionPane.showOptionDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if (a == JOptionPane.YES_OPTION) {
                     int idTransaksi = Integer.parseInt(Data);
                     TransactionManager.getInstance().setTransaction(CheckController.getOneTransaction(idTransaksi));
-                    Room room = CheckController.getDataRoom(TransactionManager.getInstance().getTransaction().getIdHotel(),TransactionManager.getInstance().getTransaction().getNoKamar());
-                    String str = "ID Transaksi : "+TransactionManager.getInstance().getTransaction().getIdTransaksi()+"\nRincian Kamar : "
-                            + room.toString();
-                    JOptionPane.showMessageDialog(null,str);
-                    checkinMenuFrame.dispose();
-                    new AdminMenuScreen();
-                }  
-              }       
-            });  
-        
-        back.setBounds(20,700,100,30);
+                    if (CheckController.updateCheckIn(idTransaksi)) {
+                        TransactionManager.getInstance().getTransaction().setStatus(BookingEnum.CHECKEDIN);
+                        Room room = CheckController.getDataRoom(TransactionManager.getInstance().getTransaction().getIdHotel(), TransactionManager.getInstance().getTransaction().getNoKamar());
+                        String str = "ID Transaksi : " + TransactionManager.getInstance().getTransaction().getIdTransaksi() + "\nRincian Kamar : " + room.toString();
+                        JOptionPane.showMessageDialog(null, str);
+                        checkinMenuFrame.dispose();
+                        new AdminMenuScreen();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Check In Failed!", "Alert", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            }
+        });
+
+        back.setBounds(20, 700, 100, 30);
         back.addActionListener(this);
         checkinMenuFrame.add(sp);
         checkinMenuFrame.add(back);
@@ -85,16 +91,16 @@ public class CheckInScreen implements ActionListener, ItemListener{
         checkinMenuFrame.add(filter);
         checkinMenuFrame.add(judul);
         checkinMenuFrame.getContentPane().setBackground(Color.WHITE);
-        checkinMenuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        checkinMenuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         checkinMenuFrame.setLocationRelativeTo(null);
-        checkinMenuFrame.setLayout(null);  
+        checkinMenuFrame.setLayout(null);
         checkinMenuFrame.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String button = e.getActionCommand();
-        switch(button){
+        switch (button) {
             case "<< Back":
                 checkinMenuFrame.dispose();
                 new AdminMenuScreen();
@@ -104,15 +110,15 @@ public class CheckInScreen implements ActionListener, ItemListener{
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        int idH=0;
+        int idH = 0;
         for (int i = 0; i < DataController.listHotel.size(); i++) {
-            if(filter.getSelectedItem().equals(DataController.listHotel.get(i).getNama())){
+            if (filter.getSelectedItem().equals(DataController.listHotel.get(i).getNama())) {
                 idH = DataController.listHotel.get(i).getIdHotel();
                 break;
             }
         }
-        DefaultTableModel model = controller.CheckController.getTransaction(idH);
+        DefaultTableModel model = controller.CheckController.getTransactionByStatus(idH, BookingEnum.BOOKED);
         table.setModel(model);
     }
-    
+
 }

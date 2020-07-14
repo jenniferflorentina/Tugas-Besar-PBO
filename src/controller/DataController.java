@@ -11,6 +11,7 @@ package controller;
  */
 
 import static controller.Controller.conn;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -135,5 +136,39 @@ public class DataController {
             e.printStackTrace();
         }
         return (user);
+    }
+    
+    //INSERT BARANG RUSAK
+    public static boolean insertBarangRusak(int idBarang, int idTransaksi, int jumlah) {
+        conn.connect();
+        String query = "INSERT INTO barang_rusak (idTransaksi,idBarang,jumlah) VALUES(?,?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, idTransaksi);
+            stmt.setInt(2, idBarang);
+            stmt.setInt(3, jumlah);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    //GET BARANG RUSAK
+    public static ArrayList<Barang> getBarangRusak(int idTransaksi) {
+        ArrayList<Barang> listBarangRusak = new ArrayList<>();
+        conn.connect();
+        String query = "SELECT * FROM barang_rusak WHERE idTransaksi="+idTransaksi;
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                listBarangRusak.add(new Barang(rs.getInt("idBarang"),listBarang.get(rs.getInt("idBarang")-1).getHarga(),rs.getInt("jumlah"),listBarang.get(rs.getInt("idBarang")-1).getNamaBarang()));
+            }    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listBarangRusak;
     }
 }

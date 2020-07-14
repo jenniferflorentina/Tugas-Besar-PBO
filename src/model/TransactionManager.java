@@ -48,15 +48,18 @@ public class TransactionManager {
                 +"<br/>      Tipe Kamar : "+room.getTipe()
                 +"<br/>      Harga Kamar : "+kurensiIndonesia.format(room.getHarga())
                 +"<br/>Detail User : <br/>      ID User : "+this.transaction.getIdUser()
-                +"<br/>      Nama : " + person.getName()
                 +"<br/>      Telepon : " + person.getNoTelepon()
+                +"<br/>      Nama : " + person.getName()
+                +"<br/>Barang Rusak : <br/>"
+                +this.transaction.printBarangRusak()
                 +"<br/>Detail Pembayaran : <br/>      ID Pembayaran : "+this.transaction.getIdJenisPembayaran()
                 +"<br/>      Jenis : " + listJenisPembayaran.get(this.transaction.getIdJenisPembayaran()-1).getJenis()
                 +"<br/>      Persen Diskon : " + listJenisPembayaran.get(this.transaction.getIdJenisPembayaran()-1).getDiskon()*100 +"%"
                 +"<br/>      Harga Total : " + kurensiIndonesia.format(transaction.HitungTotalBayar())
                 +"<br/>      Uang Muka : " + kurensiIndonesia.format(transaction.getUangMuka())
                 +"<br/>      Diskon : " + kurensiIndonesia.format(transaction.HitungDiskon())
-                +"<br/>      Harga akhir yang dibayar setelah diskon : "+kurensiIndonesia.format(transaction.getBill())+"</pre></html>";
+                +"<br/>      Harga akhir yang dibayar setelah diskon : "+kurensiIndonesia.format(transaction.getBill())
+                +"<br/>Status Transaksi : "+this.transaction.getStatus()+"</pre></html>";
     }
     
     
