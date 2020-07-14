@@ -251,4 +251,38 @@ public class Controller {
         }
         return bookingList;
     }
+    
+    public static int getHotelIDbyName(String name){
+        conn.connect();
+        String query = "SELECT * FROM hotel WHERE nama='"+name+"'";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Hotel a = new Hotel();
+                return rs.getInt("idHotel");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    
+    public static String[] getHotelNameList(){
+        String[] listNamaHotel = new String[DataController.listHotel.size()];
+        for (int counter = 0; counter < DataController.listHotel.size(); counter++) { 
+            listNamaHotel[counter] =  DataController.listHotel.get(counter).getNama();
+        }
+        return listNamaHotel;
+    }
+    public static String[] getRoomNameList(String namaHotel){
+        int a = getHotelIDbyName(String.valueOf(namaHotel));
+        int i = DataController.getListRoom(a).size();
+        String[] listNamaKamar = new String[i];
+        ArrayList<Room> listRoom = controller.DataController.getListRoom(a);
+        for (int counter = 0; counter < i; counter++) { 
+            listNamaKamar[counter] =  listRoom.get(counter).getTipe();
+        }
+        return listNamaKamar;
+    }
 }
