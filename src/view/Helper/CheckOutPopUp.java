@@ -10,13 +10,18 @@ import controller.CheckController;
 import controller.DataController;
 import static controller.DataController.insertBarangRusak;
 import controller.PembayaranController;
+import controller.RoomController;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import model.Barang;
+import model.Enums.BookingEnum;
+import model.Transaction;
 import model.TransactionManager;
+import view.AdminMenuScreen;
+import view.TransactionViewScreen;
 
 /**
  *
@@ -32,8 +37,11 @@ public class CheckOutPopUp implements ActionListener{
     ArrayList<JRadioButton> listRButtonPembayaran = new ArrayList<>();
     ButtonGroup buttonGroup =new ButtonGroup();
     JButton nextButton;
+    int penanda,noKamar;
     
-    public CheckOutPopUp() {
+    public CheckOutPopUp(int penanda, int noKamar) {
+        this.penanda = penanda;
+        this.noKamar = noKamar;
         checkOutPopUpFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         checkOutPopUpFrame.setIconImage(ConstantStyle.icon);  
         
@@ -99,6 +107,14 @@ public class CheckOutPopUp implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        long millis=System.currentTimeMillis();  
+        java.sql.Date date=new java.sql.Date(millis);
+        Transaction oldTransaction = TransactionManager.getInstance().getTransaction();
+        Transaction newTransaction = new Transaction(oldTransaction.getIdHotel(),oldTransaction.getIdJenisPembayaran(),oldTransaction.getIdUser(),noKamar,
+                                oldTransaction.getJumlahGuest(),oldTransaction.getUangMuka()-oldTransaction.getUangMuka()/2,date,oldTransaction.getTanggalCheckOut(),date,BookingEnum.CHECKEDIN);
+        if(penanda ==1 && noKamar!=0){
+            RoomController.makeCheckOutTransaction(oldTransaction.getIdTransaksi(),oldTransaction.getUangMuka());
+        }
         int a=JOptionPane.showOptionDialog(null,"Are you sure?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
         if(a==JOptionPane.YES_OPTION){  
             for (int i = 0; i < listSpinnerBarang.size(); i++) {
@@ -128,6 +144,14 @@ public class CheckOutPopUp implements ActionListener{
                     JOptionPane.showMessageDialog(null,TransactionManager.getInstance().getTransaction().printBill());
                 }
                 checkOutPopUpFrame.dispose();
+                if(penanda ==1 && noKamar!=0){
+                    JOptionPane.showMessageDialog(null,"Make new transaction for new room!!");
+                    if(RoomController.makeNewTransaction(newTransaction,BookingEnum.CHECKEDIN)){
+                        JOptionPane.showMessageDialog(null,"Update Transaction Succeed!!");
+                        new TransactionViewScreen();
+                        new AdminMenuScreen();
+                    }
+                }
             } 
         } 
     }

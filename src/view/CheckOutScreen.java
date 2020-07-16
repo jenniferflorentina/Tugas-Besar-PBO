@@ -73,7 +73,7 @@ public class CheckOutScreen implements ItemListener, ActionListener {
                 if (a == JOptionPane.YES_OPTION) {
                     int idTransaksi = Integer.parseInt(Data);
                     TransactionManager.getInstance().setTransaction(CheckController.getOneTransaction(idTransaksi));
-                    new CheckOutPopUp();
+                    new CheckOutPopUp(0,0);
                     DefaultTableModel model = controller.CheckController.getTransactionByStatus(0,BookingEnum.CHECKEDIN);
                     table.setModel(model);
                 }

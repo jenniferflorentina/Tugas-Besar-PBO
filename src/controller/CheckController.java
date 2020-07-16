@@ -156,7 +156,7 @@ public class CheckController {
     // UPDATE CHECK OUT STATUS
     public static boolean updateCheckOut(int idTransaksi) {
         conn.connect();
-        
+        TransactionManager.getInstance().getTransaction().setStatus(CHECKEDOUT);
         String query = "UPDATE booking_transaksi SET status = '"+ BookingEnum.CHECKEDOUT.toString() +"' WHERE idTransaksi = "+idTransaksi;
         try {
             Statement stmt = conn.con.createStatement();

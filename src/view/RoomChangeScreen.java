@@ -58,6 +58,7 @@ public class RoomChangeScreen implements ActionListener{
                     int idTransaksi = Integer.parseInt(Data);
                     TransactionManager.getInstance().setTransaction(CheckController.getOneTransaction(idTransaksi));
                     new RoomChangePopUp();
+                    roomChangeMenuFrame.dispose();
                 }
               }       
             });  

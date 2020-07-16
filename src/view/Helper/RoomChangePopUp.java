@@ -85,7 +85,7 @@ public class RoomChangePopUp implements ActionListener{
                     JOptionPane.showMessageDialog(null,"No Room Available!","Alert",JOptionPane.WARNING_MESSAGE);
                 }else{
                     roomChangePopUpFrame.dispose();
-                    new ChooseRoomPopUp(listRoomKosong);
+                    new ChooseRoomPopUp(listRoomKosong,0);
                 }
             }else{
                 JOptionPane.showMessageDialog(null,"Choose New Type Room!","Alert",JOptionPane.WARNING_MESSAGE);

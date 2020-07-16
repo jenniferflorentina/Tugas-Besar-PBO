@@ -5,6 +5,7 @@
  */
 package view.Helper;
 
+import controller.RoomController;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -12,6 +13,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import model.Enums.BookingEnum;
 import model.Room;
+import model.Transaction;
+import model.TransactionManager;
+import view.AdminMenuScreen;
+import view.TransactionViewScreen;
 
 
 /**
@@ -23,7 +28,7 @@ public class ChooseRoomPopUp {
     JLabel judulPilihRoom;
     JTable table;
     
-    public ChooseRoomPopUp(ArrayList<Room> listRoomKosong){
+    public ChooseRoomPopUp(ArrayList<Room> listRoomKosong, int callingCode){
         chooseRoomPopUpFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         chooseRoomPopUpFrame.setIconImage(ConstantStyle.icon);  
         
@@ -61,6 +66,40 @@ public class ChooseRoomPopUp {
                 int[] row = table.getSelectedRows();
                 for (int i = 0; i < row.length; i++) {
                     Data = (String) table.getValueAt(row[i], 0);
+                }
+                int a = JOptionPane.showOptionDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if (a == JOptionPane.YES_OPTION) {
+                    int noKamar = Integer.parseInt(Data);
+                    long millis=System.currentTimeMillis();  
+                    java.sql.Date date=new java.sql.Date(millis);
+                    if(callingCode == 0){
+                        if(ConstantStyle.formatter.format(TransactionManager.getInstance().getTransaction().getTanggalCheckIn()).equals(ConstantStyle.formatter.format(date))){
+                            if(RoomController.updateRoomBaru(noKamar, TransactionManager.getInstance().getTransaction().getIdTransaksi())){
+                                JOptionPane.showMessageDialog(null,"Update Room Succeed!!");
+                                chooseRoomPopUpFrame.dispose();
+                                new AdminMenuScreen();
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null,"Must proceed first transaction, will redirect to payment method!!");
+                            new CheckOutPopUp(1,noKamar);
+                            chooseRoomPopUpFrame.dispose();
+                        }
+                    }else if(callingCode == 1){
+                        Transaction transaksiBaru = TransactionManager.getInstance().getTransaction();
+                        transaksiBaru.setIdJenisPembayaran(1);
+                        transaksiBaru.setNoKamar(noKamar);
+                        transaksiBaru.setTanggalBooking(date);
+                        transaksiBaru.setTanggalCheckIn(date);
+                        transaksiBaru.setUangMuka(0);
+                        if(RoomController.makeNewTransaction(transaksiBaru,BookingEnum.BOOKED)){
+                            JOptionPane.showMessageDialog(null,"Make New Transaction Succeed!!"); 
+                            new TransactionViewScreen();
+                        }else{
+                            JOptionPane.showMessageDialog(null,"Can't make new transaction!!");
+                        }
+                        chooseRoomPopUpFrame.dispose();
+                        new AdminMenuScreen();
+                    }
                 }
             }
         });
