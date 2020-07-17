@@ -24,17 +24,17 @@ public class TransactionViewScreen {
         transactionViewFrame.setIconImage(ConstantStyle.icon);  
         
         judul = new JLabel("Detail Transaksi :");
-        judul.setBounds(10,10,200,100);
+        judul.setBounds(10,10,200,40);
         judul.setFont(ConstantStyle.normal);
         
         isi = new JLabel();
         isi.setFont(ConstantStyle.small);
-        isi.setBounds(10,120,690,500);
+        isi.setBounds(10,30,690,720);
         isi.setText(TransactionManager.getInstance().toString());
 
         transactionViewFrame.add(judul);
         transactionViewFrame.add(isi);
-        transactionViewFrame.setSize(700, 700);  
+        transactionViewFrame.setSize(700, 770);  
         transactionViewFrame.getContentPane().setBackground(Color.WHITE);
         transactionViewFrame.setLocationRelativeTo(null);
         transactionViewFrame.setLayout(null);  

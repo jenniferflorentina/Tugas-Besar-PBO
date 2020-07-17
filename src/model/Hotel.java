@@ -67,6 +67,11 @@ public class Hotel {
     public void setRoomList(ArrayList<Room> roomList) {
         this.roomList = roomList;
     }
+
+    @Override
+    public String toString() {
+        return "Data Hotel :\n" + "Nama : " + nama + "\nLokasi : " + lokasi;
+    }
     
     
 }
