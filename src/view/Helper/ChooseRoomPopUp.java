@@ -5,6 +5,7 @@
  */
 package view.Helper;
 
+import controller.CheckController;
 import controller.RoomController;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -63,9 +64,11 @@ public class ChooseRoomPopUp {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 String Data = null;
+                String tipeKamar =null;
                 int[] row = table.getSelectedRows();
                 for (int i = 0; i < row.length; i++) {
                     Data = (String) table.getValueAt(row[i], 0);
+                    tipeKamar = (String) table.getValueAt(row[i], 1);
                 }
                 int a = JOptionPane.showOptionDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (a == JOptionPane.YES_OPTION) {
@@ -73,7 +76,8 @@ public class ChooseRoomPopUp {
                     long millis=System.currentTimeMillis();  
                     java.sql.Date date=new java.sql.Date(millis);
                     if(callingCode == 0){
-                        if(ConstantStyle.formatter.format(TransactionManager.getInstance().getTransaction().getTanggalCheckIn()).equals(ConstantStyle.formatter.format(date))){
+                        Room room = CheckController.getDataRoom(TransactionManager.getInstance().getTransaction().getIdHotel(), TransactionManager.getInstance().getTransaction().getNoKamar());
+                        if(ConstantStyle.formatter.format(TransactionManager.getInstance().getTransaction().getTanggalCheckIn()).equals(ConstantStyle.formatter.format(date))||room.getTipe().equals(tipeKamar)){
                             if(RoomController.updateRoomBaru(noKamar, TransactionManager.getInstance().getTransaction().getIdTransaksi())){
                                 JOptionPane.showMessageDialog(null,"Update Room Succeed!!");
                                 chooseRoomPopUpFrame.dispose();

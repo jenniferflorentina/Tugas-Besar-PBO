@@ -199,6 +199,10 @@ public class Transaction {
         return (HitungTotalBayar() - this.uangMuka) - HitungDiskon() + getHargaBarangRusak();
     }
     
+    public int getRawBill() {
+        return (HitungTotalBayar() - this.uangMuka) + getHargaBarangRusak();
+    }
+    
     public int getHargaBarangRusak() {
         int total = 0;
         for (int i = 0; i < listBarangRusak.size(); i++) {

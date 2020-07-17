@@ -171,4 +171,37 @@ public class DataController {
         }
         return listBarangRusak;
     }
+    
+    //INSERT ROOM BARU
+    public static boolean insertNewRoom(Room room, int idHotel) {
+        conn.connect();
+        String query = "INSERT INTO room (idHotel,noKamar,tipe,batasGuest,harga) VALUES(?,?,?,?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, idHotel);
+            stmt.setInt(2, room.getNoKamar());
+            stmt.setString(3, room.getTipe());
+            stmt.setInt(4, room.getBatasGuest());
+            stmt.setInt(5, room.getHarga());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    //update room
+    public static boolean updateRoom(Room room, int idHotel) {
+        conn.connect();
+        String query = "UPDATE room SET tipe = '" + room.getTipe() + "' , batasGuest = "+room.getBatasGuest()+
+                " , harga =  "+room.getHarga()+" WHERE idHotel = " + idHotel +" AND noKamar = "+room.getNoKamar();
+        try {
+            Statement stmt = conn.con.createStatement();
+            stmt.executeUpdate(query);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

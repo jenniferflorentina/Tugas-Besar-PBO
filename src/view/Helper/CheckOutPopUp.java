@@ -36,7 +36,7 @@ public class CheckOutPopUp implements ActionListener{
     ArrayList<JSpinner> listSpinnerBarang = new ArrayList<>();
     ArrayList<JRadioButton> listRButtonPembayaran = new ArrayList<>();
     ButtonGroup buttonGroup =new ButtonGroup();
-    JButton nextButton;
+    JButton nextButton, calculateButton;
     int penanda,noKamar;
     
     public CheckOutPopUp(int penanda, int noKamar) {
@@ -67,8 +67,12 @@ public class CheckOutPopUp implements ActionListener{
             panelBarang.add(listLabelBarang.get(i));
             panelBarang.add(listSpinnerBarang.get(i));
         }
+        calculateButton = new JButton("Calculate");
+        calculateButton.setBounds(500,280,150,30);
+        calculateButton.addActionListener(this);
         
         panelBarang.add(judulBagianBarang); 
+        panelBarang.add(calculateButton); 
         
         panelPembayaran = new JPanel();
         panelPembayaran.setBounds(0,350,900,380);
@@ -91,6 +95,7 @@ public class CheckOutPopUp implements ActionListener{
         
         nextButton = new JButton("Next >>");
         nextButton.setBounds(500,320,150,30);
+        nextButton.setEnabled(false);
         nextButton.addActionListener(this);
 
         panelPembayaran.add(judulBagianPembayaran); 
@@ -107,6 +112,29 @@ public class CheckOutPopUp implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        String choice = e.getActionCommand();
+        switch (choice){
+            case "Calculate":
+                int a=JOptionPane.showOptionDialog(null,"Are you sure?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if(a==JOptionPane.YES_OPTION){  
+                    for (int i = 0; i < listSpinnerBarang.size(); i++) {
+                        if((int)listSpinnerBarang.get(i).getValue() >0){
+                            Barang barang = new Barang(DataController.listBarang.get(i).getIdBarang(),DataController.listBarang.get(i).getHarga(), (int) listSpinnerBarang.get(i).getValue(),DataController.listBarang.get(i).getNamaBarang());
+                            TransactionManager.getInstance().getTransaction().addBarangRusak(barang);
+                            insertBarangRusak(DataController.listBarang.get(i).getIdBarang(),TransactionManager.getInstance().getTransaction().getIdTransaksi(),(int) listSpinnerBarang.get(i).getValue());
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null,ConstantStyle.kurensiIndonesia.format(TransactionManager.getInstance().getTransaction().getRawBill()));
+                    nextButton.setEnabled(true);
+                } 
+                break;
+            case "Next >>":
+                nextButtonAction();
+                break;
+        }
+    }
+    
+    public void nextButtonAction(){
         long millis=System.currentTimeMillis();  
         java.sql.Date date=new java.sql.Date(millis);
         Transaction oldTransaction = TransactionManager.getInstance().getTransaction();
@@ -116,43 +144,42 @@ public class CheckOutPopUp implements ActionListener{
             RoomController.makeCheckOutTransaction(oldTransaction.getIdTransaksi(),oldTransaction.getUangMuka());
         }
         int a=JOptionPane.showOptionDialog(null,"Are you sure?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-        if(a==JOptionPane.YES_OPTION){  
-            for (int i = 0; i < listSpinnerBarang.size(); i++) {
-                if((int)listSpinnerBarang.get(i).getValue() >0){
-                    Barang barang = new Barang(DataController.listBarang.get(i).getIdBarang(),DataController.listBarang.get(i).getHarga(), (int) listSpinnerBarang.get(i).getValue(),DataController.listBarang.get(i).getNamaBarang());
-                    TransactionManager.getInstance().getTransaction().addBarangRusak(barang);
-                    insertBarangRusak(DataController.listBarang.get(i).getIdBarang(),TransactionManager.getInstance().getTransaction().getIdTransaksi(),(int) listSpinnerBarang.get(i).getValue());
-                }
-            }
+        if(a==JOptionPane.YES_OPTION){
+            boolean pilihan = false;
             for (int i = 0; i < listRButtonPembayaran.size(); i++) {
                 if(listRButtonPembayaran.get(i).isSelected()){
                    TransactionManager.getInstance().getTransaction().setIdJenisPembayaran(i+1);
+                   pilihan = true;
                    break;
                 }
             }
-            JOptionPane.showMessageDialog(null,TransactionManager.getInstance().getTransaction().printBill());
-            a=JOptionPane.showOptionDialog(null,"Lanjutkan Pembayaran?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-            if(a==JOptionPane.YES_OPTION){  
-                if(!PembayaranController.updatePembayaran(TransactionManager.getInstance().getTransaction().getIdTransaksi(), TransactionManager.getInstance().getTransaction().getIdJenisPembayaran())){
-                    JOptionPane.showMessageDialog(null,"Failed to make payment!","Alert",JOptionPane.WARNING_MESSAGE);
-                }
-                if(!CheckController.updateCheckOut(TransactionManager.getInstance().getTransaction().getIdTransaksi())){
-                    JOptionPane.showMessageDialog(null,"Failed to make payment!","Alert",JOptionPane.WARNING_MESSAGE);
-                }else{
-                    JOptionPane.showMessageDialog(null,"Payment succeed!!");
-                    controller.PembayaranController.tambahPoinMember(TransactionManager.getInstance().getTransaction().getIdUser());
-                    JOptionPane.showMessageDialog(null,TransactionManager.getInstance().getTransaction().printBill());
-                }
-                checkOutPopUpFrame.dispose();
-                if(penanda ==1 && noKamar!=0){
-                    JOptionPane.showMessageDialog(null,"Make new transaction for new room!!");
-                    if(RoomController.makeNewTransaction(newTransaction,BookingEnum.CHECKEDIN)){
-                        JOptionPane.showMessageDialog(null,"Update Transaction Succeed!!");
-                        new TransactionViewScreen();
-                        new AdminMenuScreen();
+            if(pilihan){
+                JOptionPane.showMessageDialog(null,TransactionManager.getInstance().getTransaction().printBill());
+                a=JOptionPane.showOptionDialog(null,"Lanjutkan Pembayaran?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if(a==JOptionPane.YES_OPTION){  
+                    if(!PembayaranController.updatePembayaran(TransactionManager.getInstance().getTransaction().getIdTransaksi(), TransactionManager.getInstance().getTransaction().getIdJenisPembayaran())){
+                        JOptionPane.showMessageDialog(null,"Failed to make payment!","Alert",JOptionPane.WARNING_MESSAGE);
                     }
-                }
-            } 
+                    if(!CheckController.updateCheckOut(TransactionManager.getInstance().getTransaction().getIdTransaksi())){
+                        JOptionPane.showMessageDialog(null,"Failed to make payment!","Alert",JOptionPane.WARNING_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(null,"Payment succeed!!");
+                        controller.PembayaranController.tambahPoinMember(TransactionManager.getInstance().getTransaction().getIdUser());
+                        JOptionPane.showMessageDialog(null,ConstantStyle.kurensiIndonesia.format(TransactionManager.getInstance().getTransaction().getBill()));
+                    }
+                    checkOutPopUpFrame.dispose();
+                    if(penanda ==1 && noKamar!=0){
+                        JOptionPane.showMessageDialog(null,"Make new transaction for new room!!");
+                        if(RoomController.makeNewTransaction(newTransaction,BookingEnum.CHECKEDIN)){
+                            JOptionPane.showMessageDialog(null,"Update Transaction Succeed!!");
+                            new TransactionViewScreen();
+                            new AdminMenuScreen();
+                        }
+                    }
+                } 
+            }else{
+                 JOptionPane.showMessageDialog(null,"Choose payment!","Alert",JOptionPane.WARNING_MESSAGE);
+            }
         } 
     }
 }

@@ -49,10 +49,8 @@ public class RoomChangeScreen implements ActionListener{
               @Override
               public void valueChanged(ListSelectionEvent e) {  
                 String Data = null;  
-                int[] row = table.getSelectedRows();  
-                for (int i = 0; i < row.length; i++) {  
-                    Data = (String) table.getValueAt(row[i], 0);  
-                }
+                int row = table.getSelectedRow();
+                Data = (String) table.getValueAt(row, 0);
                 int a = JOptionPane.showOptionDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (a == JOptionPane.YES_OPTION) {
                     int idTransaksi = Integer.parseInt(Data);

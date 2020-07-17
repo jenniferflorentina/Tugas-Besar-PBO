@@ -22,6 +22,21 @@ public class RoomController {
 
     static DatabaseHandler conn = new DatabaseHandler();
 
+    public static boolean cekRoomExist(int idHotel, int noKamar) {
+       conn.connect();
+        boolean isExist = false;
+        String query = "SELECT * FROM room WHERE idHotel = " + idHotel + " AND noKamar = " + noKamar;
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                isExist = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (isExist);
+    }
     public static ArrayList<Room> cekRoomKosong(int idHotel, String tipe) {
         ArrayList<Room> listRoomKosong = new ArrayList<>();
         long millis = System.currentTimeMillis();
@@ -33,7 +48,6 @@ public class RoomController {
                 }
             }
         }
-
         return (listRoomKosong);
     }
 
