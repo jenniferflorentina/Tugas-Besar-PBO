@@ -23,7 +23,7 @@ public class RoomController {
     static DatabaseHandler conn = new DatabaseHandler();
 
     public static boolean cekRoomExist(int idHotel, int noKamar) {
-       conn.connect();
+        conn.connect();
         boolean isExist = false;
         String query = "SELECT * FROM room WHERE idHotel = " + idHotel + " AND noKamar = " + noKamar;
         try {
@@ -37,13 +37,14 @@ public class RoomController {
         }
         return (isExist);
     }
+
     public static ArrayList<Room> cekRoomKosong(int idHotel, String tipe) {
         ArrayList<Room> listRoomKosong = new ArrayList<>();
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
-        for (int i = 0; i < listHotel.get(idHotel).getRoomList().size(); i++) {
+        for (int i = 0; i < listHotel.get(idHotel - 1).getRoomList().size(); i++) {
             if (listHotel.get(idHotel - 1).getRoomList().get(i).getTipe().equals(tipe)) {
-                if (!cekAdaTransaksi(idHotel, listHotel.get(idHotel - 1).getRoomList().get(i).getNoKamar(),date)){
+                if (!cekAdaTransaksi(idHotel, listHotel.get(idHotel - 1).getRoomList().get(i).getNoKamar(), date)) {
                     listRoomKosong.add(listHotel.get(idHotel - 1).getRoomList().get(i));
                 }
             }
@@ -68,18 +69,19 @@ public class RoomController {
         }
         return (isExist);
     }
+
     public static boolean cekRoomAvailableForStayOver(int idHotel, int noKamar, Date newDate, Date oldDate) {
         conn.connect();
         boolean isExist = true;
         long diff = newDate.getTime() - oldDate.getTime();
         float days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         String query;
-        if(days == 1){
+        if (days == 1) {
             query = "SELECT * FROM booking_transaksi WHERE idHotel = " + idHotel + " AND noKamar = " + noKamar
-                + " AND status = '" + BookingEnum.BOOKED.toString() + "' AND check_in = '" + oldDate+"'";
-        }else{
+                    + " AND status = '" + BookingEnum.BOOKED.toString() + "' AND check_in = '" + oldDate + "'";
+        } else {
             query = "SELECT * FROM booking_transaksi WHERE idHotel = " + idHotel + " AND noKamar = " + noKamar
-                + " AND status = '" + BookingEnum.BOOKED.toString() + "' AND check_in >= '"+ oldDate+ "' AND  check_out <= '"+ newDate+"'";
+                    + " AND status = '" + BookingEnum.BOOKED.toString() + "' AND check_in >= '" + oldDate + "' AND  check_out <= '" + newDate + "'";
         }
         try {
             Statement stmt = conn.con.createStatement();
@@ -150,7 +152,7 @@ public class RoomController {
             e.printStackTrace();
         }
     }
-    
+
     public static void updateCheckOutDate(int idTransaksi, Date newDate) {
         conn.connect();
         String query = "UPDATE booking_transaksi SET check_out = '" + newDate + "' WHERE idTransaksi = " + idTransaksi;
@@ -161,5 +163,20 @@ public class RoomController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getRoomTypebyRN(int RN) {
+        conn.connect();
+        String query = "SELECT * FROM room WHERE noKamar='" + RN + "'";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                return rs.getString("tipe");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

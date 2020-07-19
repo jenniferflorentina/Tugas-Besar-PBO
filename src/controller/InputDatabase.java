@@ -17,8 +17,9 @@ import java.sql.SQLException;
  * @author 1119034 Eirenika Joanna Grace Lendeng
  */
 public class InputDatabase {
+
     static DatabaseHandler conn = new DatabaseHandler();
-    
+
     public static boolean insertUsers() {
         conn.connect();
         String query = "INSERT INTO user (tipeUser, username, password, email, noKTP, noTelepon, nama, alamat) VALUES(?,?,?,?,?,?,?,?)";
@@ -107,36 +108,33 @@ public class InputDatabase {
             return (false);
         }
     }
-    
-    private static String getMd5(String input) 
-    { 
-        try { 
-  
+
+    private static String getMd5(String input) {
+        try {
+
             // Static getInstance method is called with hashing MD5 
-            MessageDigest md = MessageDigest.getInstance("MD5"); 
-  
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
             // digest() method is called to calculate message digest 
             //  of an input digest() return array of byte 
-            byte[] messageDigest = md.digest(input.getBytes()); 
-  
+            byte[] messageDigest = md.digest(input.getBytes());
+
             // Convert byte array into signum representation 
-            BigInteger no = new BigInteger(1, messageDigest); 
-  
+            BigInteger no = new BigInteger(1, messageDigest);
+
             // Convert message digest into hex value 
-            String hashtext = no.toString(16); 
-            while (hashtext.length() < 32) { 
-                hashtext = "0" + hashtext; 
-            } 
-            return hashtext; 
-        }  
-  
-        // For specifying wrong message digest algorithms 
-        catch (NoSuchAlgorithmException e) { 
-            throw new RuntimeException(e); 
-        } 
-    } 
-    
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } // For specifying wrong message digest algorithms 
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void main(String[] args) {
-       insertUsers();
+        insertUsers();
     }
 }

@@ -10,9 +10,10 @@ package model.Enums;
  * @author 1119034 Eirenika Joanna Grace Lendeng
  */
 public enum BookingEnum {
-    BOOKED ("BOOKED"), CHECKEDIN ("CHECKEDIN") , CHECKEDOUT ("CHECKEDOUT"), CANCELLED ("CANCELLED");
-    
-    private final String name;       
+
+    BOOKED("BOOKED"), CHECKEDIN("CHECKEDIN"), CHECKEDOUT("CHECKEDOUT"), CANCELLED("CANCELLED");
+
+    private final String name;
 
     private BookingEnum(String s) {
         name = s;
@@ -25,6 +26,6 @@ public enum BookingEnum {
 
     @Override
     public String toString() {
-       return this.name;
+        return this.name;
     }
 }

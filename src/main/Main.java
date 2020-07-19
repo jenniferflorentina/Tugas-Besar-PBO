@@ -6,11 +6,13 @@
 package main;
 
 import view.StartScreen;
+
 /**
  *
  * @author Jennifer Florentina
  */
 public class Main {
+
     public static void main(String[] args) {
         new StartScreen();
     }

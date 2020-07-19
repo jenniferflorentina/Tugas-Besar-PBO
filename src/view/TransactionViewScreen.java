@@ -11,33 +11,33 @@ package view;
  */
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.table.*;
 import model.TransactionManager;
 import view.Helper.ConstantStyle;
 
 public class TransactionViewScreen {
+
     JFrame transactionViewFrame = new JFrame("Transaction");
-    JLabel judul,isi;
+    JLabel judul, isi;
 
     public TransactionViewScreen() {
         transactionViewFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        transactionViewFrame.setIconImage(ConstantStyle.icon);  
-        
+        transactionViewFrame.setIconImage(ConstantStyle.icon);
+
         judul = new JLabel("Detail Transaksi :");
-        judul.setBounds(10,10,200,40);
+        judul.setBounds(10, 10, 200, 40);
         judul.setFont(ConstantStyle.normal);
-        
+
         isi = new JLabel();
         isi.setFont(ConstantStyle.small);
-        isi.setBounds(10,30,690,720);
+        isi.setBounds(10, 30, 690, 720);
         isi.setText(TransactionManager.getInstance().toString());
 
         transactionViewFrame.add(judul);
         transactionViewFrame.add(isi);
-        transactionViewFrame.setSize(700, 770);  
+        transactionViewFrame.setSize(700, 770);
         transactionViewFrame.getContentPane().setBackground(Color.WHITE);
         transactionViewFrame.setLocationRelativeTo(null);
-        transactionViewFrame.setLayout(null);  
+        transactionViewFrame.setLayout(null);
         transactionViewFrame.setVisible(true);
     }
 }
