@@ -23,21 +23,26 @@ import view.UserMenuScreen;
 public class UpgradeToMemberPopUp implements ActionListener {
 
     JFrame upgradeToMemberFrame = new JFrame("Upgrade To Member Payment");
-    JLabel judulBagianPembayaran;
+    JLabel judulBagianPembayaran, feeLabel;
     ArrayList<JRadioButton> listRButtonPembayaran = new ArrayList<>();
     ButtonGroup buttonGroup = new ButtonGroup();
     JButton back = new JButton("<< Back");
     JButton nextButton;
 
     public UpgradeToMemberPopUp() {
-        upgradeToMemberFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        upgradeToMemberFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         upgradeToMemberFrame.setIconImage(ConstantStyle.icon);
 
         judulBagianPembayaran = new JLabel("Pembayaran : ");
         judulBagianPembayaran.setBounds(20, 15, 300, 40);
         judulBagianPembayaran.setFont(ConstantStyle.normal);
+        
+        String str = "Membership fee Rp200.000";
+        feeLabel = new JLabel(str);
+        feeLabel.setBounds(20, 50, 300, 40);
+        feeLabel.setFont(ConstantStyle.normal);
 
-        int height = 60;
+        int height = 150;
         int j = 0;
         for (int i = 1; i < DataController.listJenisPembayaran.size(); i++) {
             String jenisBayar = DataController.listJenisPembayaran.get(i).getJenis();
@@ -59,6 +64,7 @@ public class UpgradeToMemberPopUp implements ActionListener {
         back.addActionListener(this);
 
         upgradeToMemberFrame.add(back);
+        upgradeToMemberFrame.add(feeLabel);
         upgradeToMemberFrame.add(judulBagianPembayaran);
         upgradeToMemberFrame.add(nextButton);
         upgradeToMemberFrame.setBackground(Color.WHITE);
