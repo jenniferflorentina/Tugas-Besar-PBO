@@ -79,7 +79,7 @@ public class MembershipPaymentPopUp implements ActionListener {
 
         membershipPaymentFrame.add(back);
         membershipPaymentFrame.setBackground(Color.WHITE);
-
+        
         membershipPaymentFrame.setSize(700, 750);
         membershipPaymentFrame.setLocationRelativeTo(null);
         membershipPaymentFrame.setLayout(null);
