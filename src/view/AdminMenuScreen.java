@@ -17,7 +17,7 @@ import javax.swing.*;
 public class AdminMenuScreen implements ActionListener {
 
     JFrame adminMenuFrame = new JFrame("Admin Menu");
-    JButton checkinButton, checkoutButton, roomchangeButton, stayoverButton, historyButton, managementButton;
+    JButton checkinButton, checkoutButton, roomchangeButton, stayoverButton, historyButton, managementButton, logOutButton;
     JLabel greetingImage, greetingText;
 
     public AdminMenuScreen() {
@@ -60,8 +60,14 @@ public class AdminMenuScreen implements ActionListener {
         greetingText = new JLabel("Admin Menu");
         greetingText.setBounds(650, 100, 500, 200);
         greetingText.setFont(new Font("Verdana", Font.PLAIN, 32));
-
+        
+        logOutButton = new JButton("Log Out");
+        logOutButton.setBounds(20, 650, 150, 50);
+        logOutButton.addActionListener(this);
+        logOutButton.setFont(ConstantStyle.small);
+        
         adminMenuFrame.add(greetingImage);
+        adminMenuFrame.add(logOutButton);
         adminMenuFrame.add(greetingText);
         adminMenuFrame.getContentPane().add(checkinButton); // Adds Button to content pane of frame
         adminMenuFrame.getContentPane().add(checkoutButton);
@@ -105,7 +111,19 @@ public class AdminMenuScreen implements ActionListener {
                 adminMenuFrame.dispose();
                 new ManagementDataScreen();
                 break;
-
+            case "Log Out":
+                int jawab = JOptionPane.showOptionDialog(null, 
+                    "Ingin Keluar?", 
+                    "Keluar", 
+                    JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.QUESTION_MESSAGE, null, null, null);
+    
+                if(jawab == JOptionPane.YES_OPTION){
+                    adminMenuFrame.dispose();
+                    new LogInScreen();
+                }
+                
+                break;
         }
     }
 }
