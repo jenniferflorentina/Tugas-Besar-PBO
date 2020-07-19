@@ -80,6 +80,10 @@ public class MemberManagementScreen implements ActionListener {
                 memberManagementFrame.dispose();
                 new StopBeingMemberPopUp();
                 break;
+            case "<< Back":
+                memberManagementFrame.dispose();
+                new MemberMenuScreen();
+                break;
         }
     }
 }

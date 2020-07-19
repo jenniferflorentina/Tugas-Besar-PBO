@@ -17,7 +17,7 @@ import view.Helper.ConstantStyle;
 public class UserMenuScreen implements ActionListener {
 
     JFrame userMenuFrame = new JFrame("User Menu");
-    JButton roomBookingButton, checkBookingButton, cancelBookingButton, rescheduleBookingButton, upgradeToMemberButton;
+    JButton roomBookingButton, checkBookingButton, cancelBookingButton, rescheduleBookingButton, upgradeToMemberButton, logOutButton;
     JLabel greetingImage, greetingText;
 
     public UserMenuScreen() {
@@ -48,6 +48,11 @@ public class UserMenuScreen implements ActionListener {
         upgradeToMemberButton.setBounds(950, 400, 300, 100);
         upgradeToMemberButton.addActionListener(this);
         upgradeToMemberButton.setFont(ConstantStyle.normal);
+        
+        logOutButton = new JButton("Log Out");
+        logOutButton.setBounds(950, 520, 300, 100);
+        logOutButton.addActionListener(this);
+        logOutButton.setFont(ConstantStyle.normal);
 
         Image logo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../asset/img/logo.png"));
         greetingImage = new JLabel(new ImageIcon(logo));
@@ -59,6 +64,7 @@ public class UserMenuScreen implements ActionListener {
         userMenuFrame.add(greetingImage);
         userMenuFrame.add(greetingText);
         userMenuFrame.getContentPane().add(roomBookingButton);
+        userMenuFrame.getContentPane().add(logOutButton);
         userMenuFrame.getContentPane().add(checkBookingButton);
         userMenuFrame.getContentPane().add(cancelBookingButton);
         userMenuFrame.getContentPane().add(rescheduleBookingButton);
@@ -94,6 +100,18 @@ public class UserMenuScreen implements ActionListener {
             case "Upgrade To Member":
                 userMenuFrame.dispose();
                 new UpgradeToMemberScreen();
+                break;
+            case "Log Out":
+                int jawab = JOptionPane.showOptionDialog(null, 
+                    "Ingin Keluar?", 
+                    "Keluar", 
+                    JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.QUESTION_MESSAGE, null, null, null);
+    
+                if(jawab == JOptionPane.YES_OPTION){
+                    userMenuFrame.dispose();
+                    new StartScreen();
+                }
                 break;
         }
     }

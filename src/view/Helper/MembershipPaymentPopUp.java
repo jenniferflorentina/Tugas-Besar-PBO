@@ -43,17 +43,17 @@ public class MembershipPaymentPopUp implements ActionListener {
         membershipPaymentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         membershipPaymentFrame.setIconImage(ConstantStyle.icon);
 
-        judulBagianPembayaran = new JLabel("Pembayaran : ");
-        judulBagianPembayaran.setBounds(20, 15, 300, 40);
-        judulBagianPembayaran.setFont(ConstantStyle.normal);
-
         Member member = (Member) PersonManager.getInstance().getPerson();
         if (member.isHasPaidFee()) {
             String txt = "<html><p>Thank You!\nYou have paid the membership fee</p></html>";
             content = new JLabel(txt);
+            content.setBounds(20, 20, 400, 100);
             content.setFont(ConstantStyle.normal);
             membershipPaymentFrame.add(content);
         } else {
+            judulBagianPembayaran = new JLabel("Pembayaran : ");
+            judulBagianPembayaran.setBounds(20, 15, 300, 40);
+            judulBagianPembayaran.setFont(ConstantStyle.normal);
             int height = 60;
             int j = 0;
             for (int i = 1; i < DataController.listJenisPembayaran.size(); i++) {

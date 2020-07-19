@@ -9,8 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import static javax.swing.Spring.height;
-import static javax.swing.Spring.width;
 import static model.Enums.TipeUserEnum.GUEST;
 import static model.Enums.TipeUserEnum.MEMBER;
 import model.PersonManager;

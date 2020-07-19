@@ -11,10 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
-import static model.Enums.TipeUserEnum.GUEST;
-import static model.Enums.TipeUserEnum.MEMBER;
 import model.PersonManager;
-import model.TransactionManager;
 import model.User;
 import view.MemberMenuScreen;
 import view.UserMenuScreen;
@@ -77,12 +74,7 @@ public class UpgradeToMemberPopUp implements ActionListener {
         switch (choice) {
             case "<< Back":
                 upgradeToMemberFrame.dispose();
-                if (PersonManager.getInstance().getPerson().getTipeUser() == GUEST) {
-                    new UserMenuScreen();
-                }
-                if (PersonManager.getInstance().getPerson().getTipeUser() == MEMBER) {
-                    new MemberMenuScreen();
-                }
+                new UserMenuScreen();
                 break;
             case "Next >>":
                 nextButtonAction();

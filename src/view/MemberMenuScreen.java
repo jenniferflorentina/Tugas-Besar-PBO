@@ -17,7 +17,7 @@ import view.Helper.ConstantStyle;
 public class MemberMenuScreen implements ActionListener {
 
     JFrame memberMenuFrame = new JFrame("User Menu");
-    JButton roomBookingButton, checkBookingButton, cancelBookingButton, rescheduleBookingButton, memberManagementButton;
+    JButton roomBookingButton, checkBookingButton, cancelBookingButton, rescheduleBookingButton, memberManagementButton, logOutButton;
     JLabel greetingImage, greetingText;
 
     public MemberMenuScreen() {
@@ -49,6 +49,11 @@ public class MemberMenuScreen implements ActionListener {
         memberManagementButton.addActionListener(this);
         memberManagementButton.setFont(ConstantStyle.normal);
 
+        logOutButton = new JButton("Log Out");
+        logOutButton.setBounds(950, 520, 300, 100);
+        logOutButton.addActionListener(this);
+        logOutButton.setFont(ConstantStyle.normal);
+        
         Image logo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("../asset/img/logo.png"));
         greetingImage = new JLabel(new ImageIcon(logo));
         greetingImage.setBounds(380, 100, 200, 200);
@@ -59,6 +64,7 @@ public class MemberMenuScreen implements ActionListener {
         memberMenuFrame.add(greetingImage);
         memberMenuFrame.add(greetingText);
         memberMenuFrame.getContentPane().add(roomBookingButton);
+        memberMenuFrame.getContentPane().add(logOutButton);
         memberMenuFrame.getContentPane().add(checkBookingButton);
         memberMenuFrame.getContentPane().add(cancelBookingButton);
         memberMenuFrame.getContentPane().add(rescheduleBookingButton);
@@ -94,6 +100,18 @@ public class MemberMenuScreen implements ActionListener {
             case "Member Management":
                 memberMenuFrame.dispose();
                 new MemberManagementScreen();
+                break;
+            case "Log Out":
+                int jawab = JOptionPane.showOptionDialog(null, 
+                    "Ingin Keluar?", 
+                    "Keluar", 
+                    JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.QUESTION_MESSAGE, null, null, null);
+    
+                if(jawab == JOptionPane.YES_OPTION){
+                    memberMenuFrame.dispose();
+                    new StartScreen();
+                }
                 break;
         }
     }
