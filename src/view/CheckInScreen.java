@@ -118,5 +118,4 @@ public class CheckInScreen implements ActionListener, ItemListener {
         DefaultTableModel model = controller.CheckController.getTransactionByStatus(idH, BookingEnum.BOOKED);
         table.setModel(model);
     }
-
 }

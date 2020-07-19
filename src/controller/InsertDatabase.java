@@ -6,19 +6,16 @@
 package controller;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import model.Hotel;
 
 /**
  *
  * @author Jennifer Florentina
  */
 public class InsertDatabase {
+
     static DatabaseHandler conn = new DatabaseHandler();
-    
+
     // INSERT
     public static void insertHotel() {
         conn.connect();
@@ -39,11 +36,12 @@ public class InsertDatabase {
             stmt.setString(2, "Jalan Kopo City no.101 , Bandung");
             stmt.setDouble(3, 0.25);
             stmt.executeUpdate();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public static void insertBarang() {
         conn.connect();
         String query = "INSERT INTO barang (nama,harga,jumlah) VALUES(?,?,?)";
@@ -68,12 +66,13 @@ public class InsertDatabase {
             stmt.setInt(2, 200000);
             stmt.setInt(3, 1);
             stmt.executeUpdate();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-     public static void insertJenisPembayaran() {
+
+    public static void insertJenisPembayaran() {
         conn.connect();
         String query = "INSERT INTO jenis_pembayaran (jenis,diskon) VALUES(?,?)";
         try {
@@ -97,12 +96,14 @@ public class InsertDatabase {
             stmt.setString(1, "Gopay");
             stmt.setDouble(2, 0.15);
             stmt.executeUpdate();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-     // INSERT
+
+    // INSERT
+
     public static void insertRoom() {
         conn.connect();
         String query = "INSERT INTO room (idHotel,tipe,batasGuest,harga,noKamar) VALUES(?,?,?,?,?)";
@@ -119,14 +120,14 @@ public class InsertDatabase {
             stmt.setString(2, "Tower Room");
             stmt.setInt(3, 2);
             stmt.setInt(4, 1899000);
-             stmt.setInt(5, 1102);
+            stmt.setInt(5, 1102);
             stmt.executeUpdate();
             stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, 1);
             stmt.setString(2, "Suite Room");
             stmt.setInt(3, 2);
             stmt.setInt(4, 2999000);
-             stmt.setInt(5, 2101);
+            stmt.setInt(5, 2101);
             stmt.executeUpdate();
             stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, 1);
@@ -168,14 +169,14 @@ public class InsertDatabase {
             stmt.setString(2, "Deluxe Room");
             stmt.setInt(3, 2);
             stmt.setInt(4, 1049000);
-             stmt.setInt(5, 1301);
+            stmt.setInt(5, 1301);
             stmt.executeUpdate();
             stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, 3);
             stmt.setString(2, "Deluxe Room");
             stmt.setInt(3, 2);
             stmt.setInt(4, 1049000);
-             stmt.setInt(5, 1302);
+            stmt.setInt(5, 1302);
             stmt.executeUpdate();
             stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, 3);
@@ -195,9 +196,10 @@ public class InsertDatabase {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) {
-       insertRoom();
-      
+        insertRoom();
+
     }
-    
+
 }

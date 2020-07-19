@@ -198,11 +198,11 @@ public class Transaction {
     public int getBill() {
         return (HitungTotalBayar() - this.uangMuka) - HitungDiskon() + getHargaBarangRusak();
     }
-    
+
     public int getRawBill() {
         return (HitungTotalBayar() - this.uangMuka) + getHargaBarangRusak();
     }
-    
+
     public int getHargaBarangRusak() {
         int total = 0;
         for (int i = 0; i < listBarangRusak.size(); i++) {
@@ -210,17 +210,17 @@ public class Transaction {
         }
         return total;
     }
-    
+
     public String printBill() {
-        return "Biaya Hotel : "+ConstantStyle.kurensiIndonesia.format(HitungTotalBayar())+"\nUang Muka : "+ConstantStyle.kurensiIndonesia.format(this.uangMuka)
-                +"\nDiskon : "+ConstantStyle.kurensiIndonesia.format(HitungDiskon())+"\nBarang Rusak : "+ConstantStyle.kurensiIndonesia.format(getHargaBarangRusak())
-                +"\n\n\nTotal : " + ConstantStyle.kurensiIndonesia.format(getBill());
+        return "Biaya Hotel : " + ConstantStyle.kurensiIndonesia.format(HitungTotalBayar()) + "\nUang Muka : " + ConstantStyle.kurensiIndonesia.format(this.uangMuka)
+                + "\nDiskon : " + ConstantStyle.kurensiIndonesia.format(HitungDiskon()) + "\nBarang Rusak : " + ConstantStyle.kurensiIndonesia.format(getHargaBarangRusak())
+                + "\n\n\nTotal : " + ConstantStyle.kurensiIndonesia.format(getBill());
     }
-    
+
     public String printBarangRusak() {
         String data = "";
         for (int i = 0; i < listBarangRusak.size(); i++) {
-            data +="    "+listBarangRusak.get(i).getNamaBarang() + "       "+listBarangRusak.get(i).getJumlah()+"\n";
+            data += "    " + listBarangRusak.get(i).getNamaBarang() + "       " + listBarangRusak.get(i).getJumlah() + "\n";
         }
         return data;
     }

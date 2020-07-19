@@ -10,5 +10,6 @@ package model.Enums;
  * @author Jennifer Florentina
  */
 public enum TipeUserEnum {
+
     ADMIN, GUEST, MEMBER;
 }

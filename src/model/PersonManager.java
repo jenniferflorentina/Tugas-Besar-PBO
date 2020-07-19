@@ -10,18 +10,15 @@ package model;
  * @author 1119034 Eirenika Joanna Grace Lendeng
  */
 public class PersonManager {
+
     private static PersonManager instance;
     private Person person;
 
     public static PersonManager getInstance() {
-        if(instance == null){
-            instance  = new PersonManager();
+        if (instance == null) {
+            instance = new PersonManager();
         }
         return instance;
-    }
-
-    public static void setInstance(PersonManager instance) {
-        PersonManager.instance = instance;
     }
 
     public Person getPerson() {
@@ -31,6 +28,4 @@ public class PersonManager {
     public void setPerson(Person person) {
         this.person = person;
     }
-    
-    
 }

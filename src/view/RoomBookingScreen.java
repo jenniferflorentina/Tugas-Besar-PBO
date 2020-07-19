@@ -5,34 +5,36 @@
  */
 package view;
 
-import controller.*;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
-import javax.swing.event.*;
+import model.Enums.BookingEnum;
+import static model.Enums.TipeUserEnum.GUEST;
+import static model.Enums.TipeUserEnum.MEMBER;
+import model.PersonManager;
 import model.Room;
-import model.User;
+import model.Transaction;
+import model.TransactionManager;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import view.Helper.*;
+
 /**
  *
  * @author 1119034 Eirenika Joanna Grace Lendeng
  */
-public class RoomBookingScreen implements ActionListener, ItemListener{
+public class RoomBookingScreen implements ActionListener, ItemListener {
 
     JFrame roomBookingFrame = new JFrame("Room Booking");
     JLabel namaLabel, teleponLabel, ktpLabel, jumlahGuestLabel,
-            tanggalCheckInLabel, tanggalCheckOutLabel, hotelLabel, kamarLabel, l1;
-    JTextField jumlahGuest, telepon, ktp, nama, hotel, kamar;
+            tanggalCheckInLabel, tanggalCheckOutLabel, hotelLabel, kamarLabel;
+    JTextField telepon, ktp, nama, hotel, kamar;
     JPanel leftPanel, rightPanel;
     JButton submitButton;
+    JButton back = new JButton("<< Back");
+    JSpinner jumlahGuest;
     JDatePickerImpl datePicker1, datePicker2;
     UtilDateModel model1, model2;
     Properties p1, p2;
@@ -54,30 +56,39 @@ public class RoomBookingScreen implements ActionListener, ItemListener{
         hotelLabel = new JLabel("Hotel              :");
         kamarLabel = new JLabel("Kamar              :");
 
-        jumlahGuestLabel.setBounds(40, 130, 150, 40);
+        jumlahGuestLabel.setBounds(40, 250, 150, 40);
         jumlahGuestLabel.setFont(ConstantStyle.small);
-        jumlahGuest = new JTextField();
-        jumlahGuest.setBounds(190, 130, 350, 40);
+
+        SpinnerModel value = new SpinnerNumberModel(0, 0, 10, 1);
+        jumlahGuest = new JSpinner(value);
+        jumlahGuest.setBounds(190, 250, 350, 40);
         jumlahGuest.setFont(ConstantStyle.small);
         jumlahGuest.setBorder(null);
-        
+
         c1 = new JComboBox(controller.Controller.getHotelNameList());
         c1.setSelectedIndex(0);
         c1.addItemListener(this);
-        
-        hotelLabel.setBounds(40, 190, 150, 40);
+
+        hotelLabel.setBounds(40, 130, 150, 40);
         hotelLabel.setFont(ConstantStyle.small);
-        c1.setBounds(190, 190, 350, 40);
+        c1.setBounds(190, 130, 350, 40);
         c1.setFont(ConstantStyle.small);
         c1.setBorder(null);
-        
-        c2 = new JComboBox(controller.Controller.getRoomNameList(String.valueOf(c1.getSelectedItem())));
+
+        c2 = new JComboBox();
+        int i = controller.DataController.getListRoom(controller.Controller.getHotelIDbyName(String.valueOf(c1.getSelectedItem()))).size();
+        String[] listNamaKamar = controller.Controller.getRoomNameList(String.valueOf(c1.getSelectedItem()));
+        for (int counter = 0; counter < i; counter++) {
+            if (!"".equals(listNamaKamar[counter])) {
+                c2.addItem(listNamaKamar[counter]);
+            }
+        }
         c2.setSelectedIndex(0);
         c2.addItemListener(this);
-        
-        kamarLabel.setBounds(40, 250, 150, 40);
+
+        kamarLabel.setBounds(40, 190, 150, 40);
         kamarLabel.setFont(ConstantStyle.small);
-        c2.setBounds(190, 250, 350, 40);
+        c2.setBounds(190, 190, 350, 40);
         c2.setFont(ConstantStyle.small);
         c2.setBorder(null);
 
@@ -112,7 +123,10 @@ public class RoomBookingScreen implements ActionListener, ItemListener{
         datePicker2.setFont(ConstantStyle.small);
         datePicker2.setBackground(new Color(245, 252, 193));
         datePicker2.setBorder(null);
-        
+
+        back.setBounds(20, 700, 100, 30);
+        back.addActionListener(this);
+
         leftPanel.add(judul1);
         leftPanel.add(jumlahGuestLabel);
         leftPanel.add(jumlahGuest);
@@ -120,13 +134,11 @@ public class RoomBookingScreen implements ActionListener, ItemListener{
         leftPanel.add(kamarLabel);
         leftPanel.add(c1);
         leftPanel.add(c2);
+        leftPanel.add(back);
         leftPanel.add(tanggalCheckInLabel);
         leftPanel.add(tanggalCheckOutLabel);
         leftPanel.add(datePicker1);
         leftPanel.add(datePicker2);
-//        leftPanel.add(nama);
-//        leftPanel.add(telepon);
-//        leftPanel.add(ktp);
         leftPanel.setBackground(new Color(245, 252, 193));
 
         rightPanel = new JPanel();
@@ -136,7 +148,7 @@ public class RoomBookingScreen implements ActionListener, ItemListener{
         JLabel judul2 = new JLabel("Personal Information");
         judul1.setBounds(40, 40, 400, 40);
         judul1.setFont(ConstantStyle.normal);
-        
+
         namaLabel = new JLabel("Name                  :");
         teleponLabel = new JLabel("Phone                 :");
         ktpLabel = new JLabel("No KTP               :");
@@ -144,6 +156,7 @@ public class RoomBookingScreen implements ActionListener, ItemListener{
         namaLabel.setBounds(40, 130, 150, 40);
         namaLabel.setFont(ConstantStyle.small);
         nama = new JTextField();
+        nama.setText(PersonManager.getInstance().getPerson().getName());
         nama.setBounds(190, 130, 350, 40);
         nama.setFont(ConstantStyle.small);
         nama.setBorder(null);
@@ -151,6 +164,7 @@ public class RoomBookingScreen implements ActionListener, ItemListener{
         teleponLabel.setBounds(40, 190, 150, 40);
         teleponLabel.setFont(ConstantStyle.small);
         telepon = new JTextField();
+        telepon.setText(PersonManager.getInstance().getPerson().getNoTelepon());
         telepon.setBounds(190, 190, 350, 40);
         telepon.setFont(ConstantStyle.small);
         telepon.setBorder(null);
@@ -158,6 +172,7 @@ public class RoomBookingScreen implements ActionListener, ItemListener{
         ktpLabel.setBounds(40, 250, 150, 40);
         ktpLabel.setFont(ConstantStyle.small);
         ktp = new JTextField();
+        ktp.setText(PersonManager.getInstance().getPerson().getNoKTP());
         ktp.setBounds(190, 250, 350, 40);
         ktp.setFont(ConstantStyle.small);
         ktp.setBorder(null);
@@ -184,69 +199,93 @@ public class RoomBookingScreen implements ActionListener, ItemListener{
         roomBookingFrame.setLayout(new GridLayout(1, 2, 10, 10));
         roomBookingFrame.setVisible(true);
     }
-    
+
     @Override
-    public void itemStateChanged(ItemEvent e) 
-    { 
+    public void itemStateChanged(ItemEvent e) {
         // if the state combobox is changed 
-        if (e.getSource() == c1) { 
+        if (e.getSource() == c1) {
             c1.setSelectedItem(e);
             c2.removeAllItems();
             int i = controller.DataController.getListRoom(controller.Controller.getHotelIDbyName(String.valueOf(c1.getSelectedItem()))).size();
-            String[] listNamaKamar = new String[i];
-            int a = controller.Controller.getHotelIDbyName(String.valueOf(c1.getSelectedItem()));
-            ArrayList<Room> listRoom = controller.DataController.getListRoom(a);
-            for (int counter = 0; counter < i; counter++) { 
-                listNamaKamar[counter] =  listRoom.get(counter).getTipe();
-                c2.addItem(listNamaKamar[counter]);
+            String[] listNamaKamar = controller.Controller.getRoomNameList(String.valueOf(c1.getSelectedItem()));
+            for (int counter = 0; counter < i; counter++) {
+                if (listNamaKamar[counter] != "") {
+                    c2.addItem(listNamaKamar[counter]);
+                }
             }
-        } else if (e.getSource() == c2) { 
+            c2.setSelectedIndex(0);
+        } else if (e.getSource() == c2) {
             c2.setSelectedItem(e);
-        } 
-    } 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-//        String nama = this.nama.getText();
-//        int jumlahGuest = Integer.parseInt(this.jumlahGuest.getText());
-//        String noTelepon = this.telepon.getText();
-//        String noKTP = this.ktp.getText();
-//        Date checkIn, checkOut = null;
-//        try {
-//            checkIn = new SimpleDateFormat("yyyy-MM-dd").parse(this.datePicker1.getJFormattedTextField().getText());
-//            checkOut = new SimpleDateFormat("yyyy-MM-dd").parse(this.datePicker2.getJFormattedTextField().getText());
-//        } catch (ParseException ex) {
-//            Logger.getLogger(RegisterScreen.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-////        String alamat = this.alamat.getText();
-////        String username = uname.getText();
-////        String password = new String(pass.getPassword());
-//        int a = JOptionPane.showConfirmDialog(null, "Are you sure?");
-////        if(a==JOptionPane.YES_OPTION){  
-////            if(nama.length()==0 || email.length()==0 || noTelepon.length()==0 || noKTP.length()==0 
-////                    || alamat.length()==0|| username.length()==0 || password.length()==0 || birthday == null){
-////                JOptionPane.showMessageDialog(null,"Input all the data!","Alert",JOptionPane.WARNING_MESSAGE);
-////            }else{
-////                User newUser = new User();
-////                newUser.setUsername(username);
-////                newUser.setPassword(password);
-////                newUser.setAlamat(alamat);
-////                newUser.setName(nama);
-////                newUser.setEmail(email);
-////                newUser.setNoKTP(noKTP);
-////                newUser.setNoTelepon(noTelepon);
-////                newUser.setDateOfBirth(birthday);
-////                if(Controller.insertUser(newUser)){
-////                    JOptionPane.showMessageDialog(null,"Registration Complete!\nPlease Login!");
-////                    registrasiFrame.dispose();
-////                    new LogInScreen();
-////                }else{
-////                    JOptionPane.showMessageDialog(null,"Data can't be inserted!","Alert",JOptionPane.WARNING_MESSAGE);
-////                }
-////            }
-////        }  
+        }
     }
 
-    public static void main(String[] args) {
-        new RoomBookingScreen();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String button = e.getActionCommand();
+        switch (button) {
+            case "<< Back":
+                roomBookingFrame.dispose();
+                if (PersonManager.getInstance().getPerson().getTipeUser() == GUEST) {
+                    new UserMenuScreen();
+                }
+                if (PersonManager.getInstance().getPerson().getTipeUser() == MEMBER) {
+                    new MemberMenuScreen();
+                }
+                break;
+            case "Submit":
+                book();
+                break;
+        }
+    }
+
+    public void book() {
+        String nama = this.nama.getText();
+        int jumlahGuest = (int) this.jumlahGuest.getValue();
+        String noTelepon = this.telepon.getText();
+        String noKTP = this.ktp.getText();
+        String checkInStr = this.datePicker1.getJFormattedTextField().getText();
+        String checkOutStr = this.datePicker2.getJFormattedTextField().getText();
+        java.sql.Date checkIn = null, checkOut = null;
+        checkIn = java.sql.Date.valueOf(checkInStr);
+        checkOut = java.sql.Date.valueOf(checkOutStr);
+        int lamaInap = checkOut.compareTo(checkIn);
+
+        int a = JOptionPane.showConfirmDialog(null, "Are you sure?");
+        if (a == JOptionPane.YES_OPTION) {
+            if (nama.length() == 0 || noTelepon.length() == 0 || noKTP.length() == 0 || checkIn == null || checkOut == null || jumlahGuest == 0) {
+                JOptionPane.showMessageDialog(null, "Input all the data!", "Alert", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Transaction trans = new Transaction();
+                trans.setIdHotel(controller.Controller.getHotelIDbyName(String.valueOf(c1.getSelectedItem())));
+                trans.setIdUser(PersonManager.getInstance().getPerson().getId());
+                trans.setJumlahGuest(jumlahGuest);
+                trans.setTanggalBooking(new Date());
+                int idHotel = controller.Controller.getHotelIDbyName(String.valueOf(c1.getSelectedItem()));
+                ArrayList listKamarKosong = controller.RoomController.cekRoomKosong(idHotel, String.valueOf(c2.getSelectedItem()));
+                if (listKamarKosong.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Room Full! Please select another room", "Alert", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    Room kamar = (Room) listKamarKosong.remove(0);
+                    trans.setNoKamar(kamar.getNoKamar());
+                    int dp = (int) (kamar.getHarga() * controller.DataController.listHotel.get(idHotel - 1).getMinimumDP()) * lamaInap;
+                    trans.setUangMuka(dp);
+                    trans.setTanggalCheckIn(checkIn);
+                    trans.setTanggalCheckOut(checkOut);
+                    trans.setStatus(BookingEnum.BOOKED);
+                    TransactionManager.getInstance().setTransaction(trans);
+                    if (jumlahGuest > kamar.getBatasGuest()) {
+                        JOptionPane.showMessageDialog(null, "Sorry we only permit " + kamar.getBatasGuest() + " in one room", "Alert", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        if (controller.Controller.bookingKamar(trans)) {
+                            JOptionPane.showMessageDialog(null, "Please pay to confirm your booking");
+                            roomBookingFrame.dispose();
+                            new RoomBookingPopUp();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Data can't be inserted!", "Alert", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

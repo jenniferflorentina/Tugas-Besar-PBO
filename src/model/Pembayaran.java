@@ -10,6 +10,7 @@ package model;
  * @author 1119034 Eirenika Joanna Grace Lendeng
  */
 public class Pembayaran {
+
     private int idJenisPembayaran;
     private String jenis;
     private double diskon;
@@ -46,6 +47,4 @@ public class Pembayaran {
     public void setDiskon(double diskon) {
         this.diskon = diskon;
     }
-    
-    
 }

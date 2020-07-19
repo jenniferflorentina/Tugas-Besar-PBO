@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author 1119034 Eirenika Joanna Grace Lendeng
  */
 public class Hotel {
+
     private int idHotel;
     private String lokasi;
     private String nama;
@@ -26,8 +27,9 @@ public class Hotel {
         this.roomList = roomList;
     }
 
-    public Hotel(){}
-    
+    public Hotel() {
+    }
+
     public int getIdHotel() {
         return idHotel;
     }
@@ -72,6 +74,4 @@ public class Hotel {
     public String toString() {
         return "Data Hotel :\n" + "Nama : " + nama + "\nLokasi : " + lokasi;
     }
-    
-    
 }

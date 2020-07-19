@@ -9,7 +9,8 @@ package model;
  *
  * @author 1119034 Eirenika Joanna Grace Lendeng
  */
-public class Room{
+public class Room {
+
     private String tipe;
     private int noKamar;
     private int harga;
@@ -21,8 +22,9 @@ public class Room{
         this.harga = harga;
         this.batasGuest = batasGuest;
     }
-    
-    public Room(){}
+
+    public Room() {
+    }
 
     public String getTipe() {
         return tipe;
@@ -58,7 +60,6 @@ public class Room{
 
     @Override
     public String toString() {
-        return "\nNo Kamar : " + noKamar + "\nTipe : " + tipe +  "\nHarga : " + harga + "\nBatas Guest : " + batasGuest;
+        return "\nNo Kamar : " + noKamar + "\nTipe : " + tipe + "\nHarga : " + harga + "\nBatas Guest : " + batasGuest;
     }
-    
 }

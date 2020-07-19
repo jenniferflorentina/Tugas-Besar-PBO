@@ -65,5 +65,4 @@ public class Member extends User {
     public void setHasPaidFee(boolean hasPaidFee) {
         this.hasPaidFee = hasPaidFee;
     }
-
 }

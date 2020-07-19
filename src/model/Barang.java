@@ -10,6 +10,7 @@ package model;
  * @author 1119034 Eirenika Joanna Grace Lendeng
  */
 public class Barang {
+
     private int idBarang;
     private int harga;
     private int jumlah;
@@ -53,8 +54,8 @@ public class Barang {
     public void setNamaBarang(String namaBarang) {
         this.namaBarang = namaBarang;
     }
-    
-    public int getTotalBayar(){
-        return this.jumlah*this.harga;
+
+    public int getTotalBayar() {
+        return this.jumlah * this.harga;
     }
 }

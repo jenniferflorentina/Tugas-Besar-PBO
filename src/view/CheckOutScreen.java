@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import model.Enums.BookingEnum;
-import model.Room;
 import model.TransactionManager;
 import view.Helper.CheckOutPopUp;
 import view.Helper.ConstantStyle;
@@ -50,7 +49,7 @@ public class CheckOutScreen implements ItemListener, ActionListener {
         }
         filter.addItemListener(this);
 
-        DefaultTableModel model = controller.CheckController.getTransactionByStatus(0,BookingEnum.CHECKEDIN);
+        DefaultTableModel model = controller.CheckController.getTransactionByStatus(0, BookingEnum.CHECKEDIN);
         table = new JTable(model);
         table.setBounds(100, 150, 1200, 500);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
@@ -71,7 +70,7 @@ public class CheckOutScreen implements ItemListener, ActionListener {
                 if (a == JOptionPane.YES_OPTION) {
                     int idTransaksi = Integer.parseInt(Data);
                     TransactionManager.getInstance().setTransaction(CheckController.getOneTransaction(idTransaksi));
-                    new CheckOutPopUp(0,0);
+                    new CheckOutPopUp(0, 0);
                 }
             }
         });
@@ -98,7 +97,7 @@ public class CheckOutScreen implements ItemListener, ActionListener {
                 break;
             }
         }
-        DefaultTableModel model = controller.CheckController.getTransactionByStatus(idH,BookingEnum.CHECKEDIN);
+        DefaultTableModel model = controller.CheckController.getTransactionByStatus(idH, BookingEnum.CHECKEDIN);
         table.setModel(model);
     }
 
@@ -112,5 +111,4 @@ public class CheckOutScreen implements ItemListener, ActionListener {
                 break;
         }
     }
-
 }
