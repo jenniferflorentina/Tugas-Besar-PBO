@@ -9,6 +9,8 @@ import controller.CheckController;
 import controller.DataController;
 import static controller.DataController.insertBarangRusak;
 import controller.PembayaranController;
+import static controller.PembayaranController.getPersonById;
+import static controller.PembayaranController.updatePoin;
 import controller.RoomController;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +19,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 import model.Barang;
 import model.Enums.BookingEnum;
+import model.Member;
+import model.Person;
 import model.Transaction;
 import model.TransactionManager;
 import view.AdminMenuScreen;
@@ -37,7 +41,9 @@ public class CheckOutPopUp implements ActionListener {
     ButtonGroup buttonGroup = new ButtonGroup();
     JButton nextButton, calculateButton;
     int penanda, noKamar;
-
+    JCheckBox cbMember;
+    Person person = getPersonById(TransactionManager.getInstance().getTransaction().getIdUser());
+    
     public CheckOutPopUp(int penanda, int noKamar) {
         this.penanda = penanda;
         this.noKamar = noKamar;
@@ -91,7 +97,14 @@ public class CheckOutPopUp implements ActionListener {
             buttonGroup.add(listRButtonPembayaran.get(i));
             panelPembayaran.add(listRButtonPembayaran.get(i));
         }
-
+        
+        if (person instanceof Member) {
+           cbMember=new JCheckBox("Use Member Poin");  
+           cbMember.setBounds(20,height,200,30);   
+           cbMember.setFont(ConstantStyle.small);
+           panelPembayaran.add(cbMember);
+        }
+        
         nextButton = new JButton("Next >>");
         nextButton.setBounds(500, 320, 150, 30);
         nextButton.setEnabled(false);
@@ -154,6 +167,12 @@ public class CheckOutPopUp implements ActionListener {
             }
             if (pilihan) {
                 JOptionPane.showMessageDialog(null, TransactionManager.getInstance().getTransaction().printBill());
+                if (person instanceof Member) {
+                    if(cbMember.isSelected()){  
+                        int diskonPoinMember =  controller.PembayaranController.usePoinMember(TransactionManager.getInstance().getTransaction().getIdUser());
+                        JOptionPane.showMessageDialog(null, "Diskon poin member : "+ ConstantStyle.kurensiIndonesia.format(diskonPoinMember) + "\nTotal Bayar : "+ConstantStyle.kurensiIndonesia.format(TransactionManager.getInstance().getTransaction().getBill()-diskonPoinMember));
+                    } 
+                }
                 a = JOptionPane.showOptionDialog(null, "Lanjutkan Pembayaran?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (a == JOptionPane.YES_OPTION) {
                     if (!PembayaranController.updatePembayaran(TransactionManager.getInstance().getTransaction().getIdTransaksi(), TransactionManager.getInstance().getTransaction().getIdJenisPembayaran())) {
