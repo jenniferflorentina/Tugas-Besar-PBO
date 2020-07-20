@@ -26,7 +26,7 @@ import view.UserMenuScreen;
 public class RoomBookingPopUp implements ActionListener {
 
     JFrame roomBookingPopUpFrame = new JFrame("Booking Payment");
-    JLabel judulBagianPembayaran;
+    JLabel judulBagianPembayaran, dpLabel;
     ArrayList<JRadioButton> listRButtonPembayaran = new ArrayList<>();
     ButtonGroup buttonGroup = new ButtonGroup();
     JButton nextButton;
@@ -34,14 +34,19 @@ public class RoomBookingPopUp implements ActionListener {
     int penanda, noKamar;
 
     public RoomBookingPopUp() {
-        roomBookingPopUpFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        roomBookingPopUpFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         roomBookingPopUpFrame.setIconImage(ConstantStyle.icon);
 
         judulBagianPembayaran = new JLabel("Pembayaran : ");
         judulBagianPembayaran.setBounds(20, 15, 300, 40);
         judulBagianPembayaran.setFont(ConstantStyle.normal);
 
-        int height = 60;
+        String str = "<html>Total yang harus dibayar " + ConstantStyle.kurensiIndonesia.format(TransactionManager.getInstance().getTransaction().getUangMuka()) + "</html>";
+        dpLabel = new JLabel(str);
+        dpLabel.setBounds(20, 50, 500, 100);
+        dpLabel.setFont(ConstantStyle.normal);
+
+        int height = 150;
         int j = 0;
         for (int i = 1; i < DataController.listJenisPembayaran.size(); i++) {
             String jenisBayar = DataController.listJenisPembayaran.get(i).getJenis();
@@ -55,7 +60,7 @@ public class RoomBookingPopUp implements ActionListener {
         }
 
         nextButton = new JButton("Next >>");
-        nextButton.setBounds(500, 320, 150, 30);
+        nextButton.setBounds(500, 350, 150, 30);
         nextButton.setEnabled(true);
         nextButton.addActionListener(this);
 
@@ -63,6 +68,7 @@ public class RoomBookingPopUp implements ActionListener {
         back.addActionListener(this);
 
         roomBookingPopUpFrame.add(back);
+        roomBookingPopUpFrame.add(dpLabel);
         roomBookingPopUpFrame.add(judulBagianPembayaran);
         roomBookingPopUpFrame.add(nextButton);
         roomBookingPopUpFrame.setBackground(Color.WHITE);
@@ -103,16 +109,19 @@ public class RoomBookingPopUp implements ActionListener {
                 }
             }
             if (pilihan) {
-                a = JOptionPane.showOptionDialog(null, "Total yang harus dibayar : " + TransactionManager.getInstance().getTransaction().getUangMuka() + "\nLanjutkan Pembayaran?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                a = JOptionPane.showOptionDialog(null, "Total yang harus dibayar : " + ConstantStyle.kurensiIndonesia.format(TransactionManager.getInstance().getTransaction().getUangMuka()) + "\nLanjutkan Pembayaran?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (a == JOptionPane.YES_OPTION) {
                     if (!PembayaranController.updatePembayaran(TransactionManager.getInstance().getTransaction().getIdTransaksi(), TransactionManager.getInstance().getTransaction().getIdJenisPembayaran())) {
                         JOptionPane.showMessageDialog(null, "Failed to make payment!", "Alert", JOptionPane.WARNING_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Payment succeed!!");
-                        controller.PembayaranController.tambahPoinMember(TransactionManager.getInstance().getTransaction().getIdUser());
-                        JOptionPane.showMessageDialog(null, ConstantStyle.kurensiIndonesia.format(TransactionManager.getInstance().getTransaction().getUangMuka()));
                         roomBookingPopUpFrame.dispose();
-                        new UserMenuScreen();
+                        if (PersonManager.getInstance().getPerson().getTipeUser() == GUEST) {
+                            new UserMenuScreen();
+                        }
+                        if (PersonManager.getInstance().getPerson().getTipeUser() == MEMBER) {
+                            new MemberMenuScreen();
+                        }
                     }
                 }
             } else {

@@ -32,8 +32,7 @@ import view.UserMenuScreen;
 public class MembershipPaymentPopUp implements ActionListener {
 
     JFrame membershipPaymentFrame = new JFrame("Membership Payment");
-    JPanel panelPembayaran;
-    JLabel judulBagianPembayaran, content;
+    JLabel judulBagianPembayaran, content, feeLabel;
     ArrayList<JRadioButton> listRButtonPembayaran = new ArrayList<>();
     ButtonGroup buttonGroup = new ButtonGroup();
     JButton back = new JButton("<< Back");
@@ -54,7 +53,12 @@ public class MembershipPaymentPopUp implements ActionListener {
             judulBagianPembayaran = new JLabel("Pembayaran : ");
             judulBagianPembayaran.setBounds(20, 15, 300, 40);
             judulBagianPembayaran.setFont(ConstantStyle.normal);
-            int height = 60;
+            
+            feeLabel = new JLabel("Membership fee Rp200.000");
+            feeLabel.setBounds(20, 50, 300, 40);
+            feeLabel.setFont(ConstantStyle.normal);
+            
+            int height = 150;
             int j = 0;
             for (int i = 1; i < DataController.listJenisPembayaran.size(); i++) {
                 String jenisBayar = DataController.listJenisPembayaran.get(i).getJenis();
@@ -71,6 +75,7 @@ public class MembershipPaymentPopUp implements ActionListener {
             nextButton.setEnabled(true);
             nextButton.addActionListener(this);
             membershipPaymentFrame.add(judulBagianPembayaran);
+            membershipPaymentFrame.add(feeLabel);
             membershipPaymentFrame.add(nextButton);
         }
 
@@ -111,7 +116,6 @@ public class MembershipPaymentPopUp implements ActionListener {
             boolean pilihan = false;
             for (int i = 0; i < listRButtonPembayaran.size(); i++) {
                 if (listRButtonPembayaran.get(i).isSelected()) {
-                    TransactionManager.getInstance().getTransaction().setIdJenisPembayaran(i + 1);
                     pilihan = true;
                     break;
                 }
