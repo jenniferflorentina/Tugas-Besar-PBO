@@ -5,8 +5,8 @@
  */
 package view;
 
-import view.Helper.ConstantStyle;
-import model.Enums.TipeUserEnum;
+import view.helper.ConstantStyle;
+import model.enums.TipeUserEnum;
 import controller.*;
 import java.awt.*;
 import java.awt.event.*;

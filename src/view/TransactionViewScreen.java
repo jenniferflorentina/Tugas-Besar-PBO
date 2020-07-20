@@ -12,7 +12,7 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 import model.TransactionManager;
-import view.Helper.ConstantStyle;
+import view.helper.ConstantStyle;
 
 public class TransactionViewScreen {
 

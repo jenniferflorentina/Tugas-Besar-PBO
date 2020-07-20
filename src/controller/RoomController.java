@@ -9,7 +9,7 @@ import static controller.DataController.listHotel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import model.Enums.BookingEnum;
+import model.enums.BookingEnum;
 import model.Room;
 import model.Transaction;
 import model.TransactionManager;

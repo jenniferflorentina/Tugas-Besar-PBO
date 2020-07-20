@@ -11,13 +11,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
-import model.Enums.BookingEnum;
-import static model.Enums.BookingEnum.*;
+import model.enums.BookingEnum;
+import static model.enums.BookingEnum.*;
 import model.Hotel;
 import model.Room;
 import model.Transaction;
 import model.TransactionManager;
-import static view.Helper.ConstantStyle.formatter;
+import static view.helper.ConstantStyle.formatter;
 
 /**
  *
@@ -208,7 +208,7 @@ public class CheckController {
     //Untuk cancel booking
     public static boolean CancelBooking(Transaction trans) {
         conn.connect();
-        String query = "UPDATE booking_transaksi SET  status='" + model.Enums.BookingEnum.CANCELLED + "' "
+        String query = "UPDATE booking_transaksi SET  status='" + model.enums.BookingEnum.CANCELLED + "' "
                 + "WHERE idTransaksi='" + trans.getIdTransaksi() + "' ";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);

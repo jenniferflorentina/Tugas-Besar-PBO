@@ -8,10 +8,10 @@ package model;
 import controller.CheckController;
 import static controller.DataController.*;
 import java.util.ArrayList;
-import model.Enums.BookingEnum;
+import model.enums.BookingEnum;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import view.Helper.ConstantStyle;
+import view.helper.ConstantStyle;
 
 /**
  *

@@ -5,7 +5,7 @@
  */
 package view;
 
-import view.Helper.ConstantStyle;
+import view.helper.ConstantStyle;
 import controller.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,7 +13,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import model.*;
-import model.Enums.BookingEnum;
+import model.enums.BookingEnum;
 
 /**
  *

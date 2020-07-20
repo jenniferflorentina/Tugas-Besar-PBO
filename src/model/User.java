@@ -5,7 +5,7 @@
  */
 package model;
 
-import model.Enums.TipeUserEnum;
+import model.enums.TipeUserEnum;
 import java.util.Date;
 
 /**

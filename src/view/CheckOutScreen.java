@@ -7,10 +7,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
-import model.Enums.BookingEnum;
+import model.enums.BookingEnum;
 import model.TransactionManager;
-import view.Helper.CheckOutPopUp;
-import view.Helper.ConstantStyle;
+import view.helper.CheckOutPopUp;
+import view.helper.ConstantStyle;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

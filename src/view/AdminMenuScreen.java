@@ -5,7 +5,7 @@
  */
 package view;
 
-import view.Helper.ConstantStyle;
+import view.helper.ConstantStyle;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

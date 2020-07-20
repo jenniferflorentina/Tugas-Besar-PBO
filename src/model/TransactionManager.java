@@ -7,9 +7,9 @@ package model;
 
 import controller.CheckController;
 import static controller.DataController.*;
-import model.Enums.BookingEnum;
-import static view.Helper.ConstantStyle.formatter;
-import static view.Helper.ConstantStyle.kurensiIndonesia;
+import model.enums.BookingEnum;
+import static view.helper.ConstantStyle.formatter;
+import static view.helper.ConstantStyle.kurensiIndonesia;
 
 /**
  *

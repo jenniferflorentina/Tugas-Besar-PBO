@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import model.Member;
 import model.PersonManager;
-import view.Helper.ConstantStyle;
-import view.Helper.MembershipPaymentPopUp;
-import view.Helper.StopBeingMemberPopUp;
+import view.helper.ConstantStyle;
+import view.helper.MembershipPaymentPopUp;
+import view.helper.StopBeingMemberPopUp;
 
 /**
  *

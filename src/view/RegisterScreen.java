@@ -5,8 +5,8 @@
  */
 package view;
 
-import view.Helper.DateLabelFormatter;
-import view.Helper.ConstantStyle;
+import view.helper.DateLabelFormatter;
+import view.helper.ConstantStyle;
 import controller.*;
 import java.awt.*;
 import java.util.*;

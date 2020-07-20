@@ -13,12 +13,12 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import static model.Enums.TipeUserEnum.GUEST;
-import static model.Enums.TipeUserEnum.MEMBER;
+import static model.enums.TipeUserEnum.GUEST;
+import static model.enums.TipeUserEnum.MEMBER;
 import model.PersonManager;
 import model.TransactionManager;
-import view.Helper.ConstantStyle;
-import view.Helper.RescheduleBookingPopUp;
+import view.helper.ConstantStyle;
+import view.helper.RescheduleBookingPopUp;
 
 /**
  *
