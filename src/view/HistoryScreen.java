@@ -17,7 +17,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 import model.TransactionManager;
-import view.Helper.ConstantStyle;
+import view.helper.ConstantStyle;
 
 public class HistoryScreen implements ActionListener {
 

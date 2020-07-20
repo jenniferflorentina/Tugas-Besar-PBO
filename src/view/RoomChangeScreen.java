@@ -15,10 +15,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
-import model.Enums.BookingEnum;
+import model.enums.BookingEnum;
 import model.TransactionManager;
-import view.Helper.ConstantStyle;
-import view.Helper.RoomChangePopUp;
+import view.helper.ConstantStyle;
+import view.helper.RoomChangePopUp;
 
 public class RoomChangeScreen implements ActionListener {
 

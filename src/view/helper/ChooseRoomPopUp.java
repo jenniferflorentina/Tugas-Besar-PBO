@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view.Helper;
+package view.helper;
 
 import controller.CheckController;
 import controller.RoomController;
@@ -12,7 +12,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import model.Enums.BookingEnum;
+import model.enums.BookingEnum;
 import model.Room;
 import model.Transaction;
 import model.TransactionManager;

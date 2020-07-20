@@ -5,13 +5,16 @@
  */
 package view;
 
+import view.helper.DateLabelFormatter;
+import view.helper.RoomBookingPopUp;
+import view.helper.ConstantStyle;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
-import model.Enums.BookingEnum;
-import static model.Enums.TipeUserEnum.GUEST;
-import static model.Enums.TipeUserEnum.MEMBER;
+import model.enums.BookingEnum;
+import static model.enums.TipeUserEnum.GUEST;
+import static model.enums.TipeUserEnum.MEMBER;
 import model.PersonManager;
 import model.Room;
 import model.Transaction;
@@ -19,7 +22,6 @@ import model.TransactionManager;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-import view.Helper.*;
 
 /**
  *

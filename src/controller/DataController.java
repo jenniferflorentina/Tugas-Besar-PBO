@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import model.*;
-import static model.Enums.TipeUserEnum.*;
+import static model.enums.TipeUserEnum.*;
 
 public class DataController {
 

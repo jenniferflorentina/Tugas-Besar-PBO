@@ -9,10 +9,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
-import static model.Enums.TipeUserEnum.GUEST;
-import static model.Enums.TipeUserEnum.MEMBER;
+import static model.enums.TipeUserEnum.GUEST;
+import static model.enums.TipeUserEnum.MEMBER;
 import model.PersonManager;
-import view.Helper.ConstantStyle;
+import view.helper.ConstantStyle;
 
 /**
  *

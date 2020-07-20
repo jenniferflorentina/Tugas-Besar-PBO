@@ -8,7 +8,7 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import view.Helper.ConstantStyle;
+import view.helper.ConstantStyle;
 
 /**
  *

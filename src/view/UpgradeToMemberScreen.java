@@ -9,11 +9,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import static model.Enums.TipeUserEnum.GUEST;
-import static model.Enums.TipeUserEnum.MEMBER;
+import static model.enums.TipeUserEnum.GUEST;
+import static model.enums.TipeUserEnum.MEMBER;
 import model.PersonManager;
-import view.Helper.ConstantStyle;
-import view.Helper.UpgradeToMemberPopUp;
+import view.helper.ConstantStyle;
+import view.helper.UpgradeToMemberPopUp;
 
 /**
  *

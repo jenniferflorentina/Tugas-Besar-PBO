@@ -5,7 +5,7 @@
  */
 package view;
 
-import view.Helper.*;
+import view.helper.ConstantStyle;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -27,7 +27,7 @@ public class StartScreen implements ActionListener {
         loginButton = new JButton("Log In");
         loginButton.setBounds(600, 450, 150, 50);
         loginButton.addActionListener(this);
-        loginButton.setFont(view.Helper.ConstantStyle.normal);
+        loginButton.setFont(view.helper.ConstantStyle.normal);
 
         registerButton = new JButton("Registrasi");
         registerButton.setBounds(600, 550, 150, 50);

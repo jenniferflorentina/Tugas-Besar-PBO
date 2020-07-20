@@ -5,7 +5,7 @@
  */
 package controller;
 
-import static model.Enums.TipeUserEnum.*;
+import static model.enums.TipeUserEnum.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -296,7 +296,7 @@ public class Controller {
             stmt.setInt(7, trans.getJumlahGuest());
             stmt.setInt(8, trans.getUangMuka());
             stmt.setInt(9, trans.getIdJenisPembayaran());
-            stmt.setString(10, String.valueOf(model.Enums.BookingEnum.BOOKED));
+            stmt.setString(10, String.valueOf(model.enums.BookingEnum.BOOKED));
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -315,7 +315,7 @@ public class Controller {
             Member member = new Member();
             member.setId(user.getId());
             member.setAlamat(user.getAlamat());
-            member.setTipeUser(model.Enums.TipeUserEnum.MEMBER);
+            member.setTipeUser(model.enums.TipeUserEnum.MEMBER);
             member.setDateOfBirth(user.getDateOfBirth());
             member.setEmail(user.getEmail());
             member.setNoKTP(user.getNoKTP());
@@ -344,7 +344,7 @@ public class Controller {
             User user = new User();
             user.setId(member.getId());
             user.setAlamat(member.getAlamat());
-            user.setTipeUser(model.Enums.TipeUserEnum.GUEST);
+            user.setTipeUser(model.enums.TipeUserEnum.GUEST);
             user.setDateOfBirth(member.getDateOfBirth());
             user.setEmail(member.getEmail());
             user.setNoKTP(member.getNoKTP());

@@ -1,4 +1,4 @@
-package view.Helper;
+package view.helper;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import model.Barang;
-import model.Enums.BookingEnum;
+import model.enums.BookingEnum;
 import model.Member;
 import model.Person;
 import model.Transaction;
