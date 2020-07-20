@@ -7,6 +7,7 @@ package model;
 
 import controller.CheckController;
 import static controller.DataController.*;
+import model.Enums.BookingEnum;
 import static view.Helper.ConstantStyle.formatter;
 import static view.Helper.ConstantStyle.kurensiIndonesia;
 
@@ -38,7 +39,7 @@ public class TransactionManager {
     public String toString() {
         Person person = getPersonByID(this.transaction.getIdUser());
         Room room = CheckController.getDataRoom(transaction.getIdHotel(), transaction.getNoKamar());
-        return "<html><pre>ID Transaksi : " + this.transaction.getIdTransaksi()
+        String data = "<html><pre>ID Transaksi : " + this.transaction.getIdTransaksi()
                 + "<br/>Tanggal Booking : " + formatter.format(this.transaction.getTanggalBooking())
                 + "<br/>Tanggal Check In : " + formatter.format(this.transaction.getTanggalCheckIn())
                 + "<br/>Tanggal Check Out : " + formatter.format(this.transaction.getTanggalCheckOut())
@@ -52,14 +53,17 @@ public class TransactionManager {
                 + "<br/>      Telepon : " + person.getNoTelepon()
                 + "<br/>      Nama : " + person.getName()
                 + "<br/>Barang Rusak : <br/>"
-                + this.transaction.printBarangRusak()
-                + "<br/>Detail Pembayaran : <br/>      ID Pembayaran : " + this.transaction.getIdJenisPembayaran()
+                + this.transaction.printBarangRusak();
+        if(this.getTransaction().getStatus()==BookingEnum.CHECKEDOUT){
+        data += "<br/>Detail Pembayaran : <br/>      ID Pembayaran : " + this.transaction.getIdJenisPembayaran()
                 + "<br/>      Jenis : " + listJenisPembayaran.get(this.transaction.getIdJenisPembayaran() - 1).getJenis()
                 + "<br/>      Persen Diskon : " + listJenisPembayaran.get(this.transaction.getIdJenisPembayaran() - 1).getDiskon() * 100 + "%"
                 + "<br/>      Harga Total : " + kurensiIndonesia.format(transaction.HitungTotalBayar())
                 + "<br/>      Uang Muka : " + kurensiIndonesia.format(transaction.getUangMuka())
                 + "<br/>      Diskon : " + kurensiIndonesia.format(transaction.HitungDiskon())
-                + "<br/>      Harga akhir yang dibayar setelah diskon : " + kurensiIndonesia.format(transaction.getBill())
-                + "<br/>Status Transaksi : " + this.transaction.getStatus() + "</pre></html>";
+                + "<br/>      Harga akhir yang dibayar setelah diskon : " + kurensiIndonesia.format(transaction.getBill());
+        }
+        data += "<br/>Status Transaksi : " + this.transaction.getStatus()+"</pre></html>";
+        return data;
     }
 }
