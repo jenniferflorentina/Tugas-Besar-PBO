@@ -95,6 +95,22 @@ public class PembayaranController {
             }
         }
     }
+    
+    public static int usePoinMember(int idUser) {
+        Person person = getPersonById(idUser);
+        if (person instanceof Member) {
+            Member member = (Member) person;
+            int poinBerkurang = member.getPoinMember() / 10;
+            member.setPoinMember(member.getPoinMember() - poinBerkurang*10);
+            if (updatePoin(idUser, member.getPoinMember())) {
+                JOptionPane.showMessageDialog(null, "Poin Member berkurang " + poinBerkurang*10 + "\n\nTotal poin : " + member.getPoinMember());
+                return poinBerkurang*100000;
+            } else {
+                JOptionPane.showMessageDialog(null, "Failed to use poin!", "Alert", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        return 0;
+    }
 
     // UPDATE PEMBAYARAN
     public static boolean updatePembayaran(int idTransaksi, int idPembayaran) {
