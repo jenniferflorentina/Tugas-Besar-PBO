@@ -16,7 +16,7 @@ import java.sql.SQLException;
  *
  * @author 1119034 Eirenika Joanna Grace Lendeng
  */
-public class InputDatabase {
+public class DataUserDatabase {
 
     static DatabaseHandler conn = new DatabaseHandler();
 

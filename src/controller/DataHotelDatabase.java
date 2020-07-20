@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author Jennifer Florentina
  */
-public class InsertDatabase {
+public class DataHotelDatabase {
 
     static DatabaseHandler conn = new DatabaseHandler();
 
