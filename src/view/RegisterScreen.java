@@ -130,7 +130,7 @@ public class RegisterScreen implements ActionListener {
         rightPanel.setLayout(null);
         rightPanel.setBackground(new Color(245, 252, 193));
 
-        JLabel judul2 = new JLabel("~ Usernama and Password ~");
+        JLabel judul2 = new JLabel("~ Username and Password ~");
         judul2.setBounds(40, 40, 400, 40);
         judul2.setFont(ConstantStyle.normal);
 
